@@ -1,102 +1,618 @@
-const perguntas = [
-  { pergunta: 'A seguridade social compreende um conjunto de ações de iniciativa exclusiva do Poder Público?', resposta: 'E', explicacao: 'A banca usou a palavra de perigo "exclusiva". A iniciativa é dos Poderes Públicos E da sociedade.', lei: 'Art. 194. A seguridade social compreende um conjunto integrado de ações de iniciativa dos Poderes Públicos e da sociedade...' },
-  { pergunta: 'Saúde, previdência e assistência social formam o tripé da seguridade social brasileira.', resposta: 'C', explicacao: 'Correto. Estes são os três direitos assegurados pelo sistema de seguridade.', lei: 'Art. 194. ...destinadas a assegurar os direitos relativos à saúde, à previdência e à assistência social.' },
-  { pergunta: 'A organização da seguridade social compete à sociedade, nos termos da lei.', resposta: 'E', explicacao: 'Cuidado! A INICIATIVA é de ambos, mas a ORGANIZAÇÃO compete ao Poder Público.', lei: 'Art. 194. Parágrafo único. Compete ao Poder Público, nos termos da lei, organizar a seguridade social...' },
-  { pergunta: 'A universalidade da cobertura e do atendimento é um dos objetivos da seguridade social.', resposta: 'C', explicacao: 'Correto. É o primeiro objetivo listado para a organização do sistema.', lei: 'Art. 194. Parágrafo único, I - universalidade da cobertura e do atendimento;' },
-  { pergunta: 'A seguridade social deve garantir benefícios superiores para a população urbana em relação à rural para manter o equilíbrio financeiro.', resposta: 'E', explicacao: 'Falso. O objetivo é a uniformidade e equivalência entre as populações urbanas e rurais.', lei: 'Art. 194. Parágrafo único, II - uniformidade e equivalência dos benefícios e serviços às populações urbanas e rurais;' },
-  { pergunta: 'A seletividade e distributividade na prestação dos benefícios e serviços é um objetivo constitucional da seguridade.', resposta: 'C', explicacao: 'Correto. Serve para selecionar quais situações serão cobertas e distribuir para quem mais precisa.', lei: 'Art. 194. Parágrafo único, III - seletividade e distributividade na prestação dos benefícios e serviços;' },
-  { pergunta: 'O valor dos benefícios da seguridade social pode ser reduzido caso haja déficit orçamentário no país.', resposta: 'E', explicacao: 'Falso. A Constituição prevê a irredutibilidade do valor dos benefícios como objetivo.', lei: 'Art. 194. Parágrafo único, IV - irredutibilidade do valor dos benefícios;' },
-  { pergunta: 'A equidade na forma de participação no custeio significa que quem tem maior capacidade econômica deve contribuir mais.', resposta: 'C', explicacao: 'Correto. A equidade busca justiça social no financiamento.', lei: 'Art. 194. Parágrafo único, V - equidade na forma de participação no custeio;' },
-  { pergunta: 'A diversidade da base de financiamento é um objetivo que dispensa a identificação contábil específica por área.', resposta: 'E', explicacao: 'Errado. A lei exige a identificação em rubricas contábeis específicas para saúde, previdência e assistência.', lei: 'Art. 194. Parágrafo único, VI - diversidade da base de financiamento, identificando-se, em rubricas contábeis específicas para cada área...' },
-  { pergunta: 'O caráter contributivo é uma característica exclusiva da previdência social dentro da seguridade.', resposta: 'C', explicacao: 'Correto. A saúde e a assistência não possuem esse requisito para o atendimento.', lei: 'Art. 194. Parágrafo único, VI - ...preservado o caráter contributivo da previdência social;' },
-  { pergunta: 'A gestão da seguridade social é exclusivamente estatal, sem participação de aposentados ou trabalhadores.', resposta: 'E', explicacao: 'Palavra de perigo "exclusivamente". A gestão é quadripartite e democrática.', lei: 'Art. 194. Parágrafo único, VII - caráter democrático e descentralizado da administração, mediante gestão quadripartite...' },
-  { pergunta: 'Na gestão quadripartite, participam trabalhadores, empregadores, aposentados e o Governo.', resposta: 'C', explicacao: 'Correto. São os quatro pilares da gestão dos órgãos colegiados.', lei: 'Art. 194. Parágrafo único, VII - ...com participação dos trabalhadores, dos empregadores, dos aposentados e do Governo nos órgãos colegiados.' },
-  { pergunta: 'A seguridade social é financiada apenas pela União e pelos Estados.', resposta: 'E', explicacao: 'Palavra de perigo "apenas". O financiamento vem de toda a sociedade, União, Estados, DF e Municípios.', lei: 'Art. 195. A seguridade social será financiada por toda a sociedade, de forma direta e indireta... recursos provenientes dos orçamentos da União, dos Estados, do Distrito Federal e dos Municípios...' },
-  { pergunta: 'As empresas contribuem para a seguridade social incidindo exclusivamente sobre o lucro líquido.', resposta: 'E', explicacao: 'Falso. Incide sobre folha de salários, receita/faturamento e lucro.', lei: 'Art. 195. I - do empregador, da empresa... incidentes sobre: a) a folha de salários... b) a receita ou o faturamento; c) o lucro;' },
-  { pergunta: 'Incide contribuição social sobre a folha de salários paga a pessoa física sem vínculo empregatício que preste serviço à empresa.', resposta: 'C', explicacao: 'Correto. A Constituição abrange trabalhadores com ou sem vínculo.', lei: 'Art. 195. I, a) ...pessoa física que lhe preste serviço, mesmo sem vínculo empregatício;' },
-  { pergunta: 'Aposentadorias e pensões do Regime Geral de Previdência Social sofrem incidência de contribuição para a seguridade social.', resposta: 'E', explicacao: 'Falso. A Constituição veda expressamente essa incidência para o RGPS.', lei: 'Art. 195. II - ...não incidindo contribuição sobre aposentadoria e pensão concedidas pelo Regime Geral de Previdência Social;' },
-  { pergunta: 'Receitas de concursos de prognósticos são fontes de financiamento da seguridade social.', resposta: 'C', explicacao: 'Correto. Refere-se a loterias e similares.', lei: 'Art. 195. III - sobre a receita de concursos de prognósticos;' },
-  { pergunta: 'O importador de bens ou serviços do exterior é contribuinte da seguridade social.', resposta: 'C', explicacao: 'Correto. Previsto no inciso IV do Art. 195.', lei: 'Art. 195. IV - do importador de bens ou serviços do exterior...' },
-  { pergunta: 'O Governo pode criar novos benefícios de seguridade sem indicar a fonte de custeio total em casos de calamidade.', resposta: 'E', explicacao: 'Falso. Nenhum benefício pode ser criado, majorado ou estendido sem a fonte de custeio total. Sem exceções no texto.', lei: 'Art. 195. § 5º Nenhum benefício ou serviço da seguridade social poderá ser criado, majorado ou estendido sem a correspondente fonte de custeio total.' },
-  { pergunta: 'Novas contribuições sociais só podem ser exigidas 90 dias após a publicação da lei que as instituiu.', resposta: 'C', explicacao: 'Correto. É a chamada anterioridade mitigada ou noventena.', lei: 'Art. 195. § 6º As contribuições sociais... só poderão ser exigidas após decorridos noventa dias da data da publicação da lei...' },
-  { pergunta: 'Entidades beneficentes de assistência social são isentas de contribuição se cumprirem os requisitos legais.', resposta: 'C', explicacao: 'Correto. A isenção depende do atendimento às exigências em lei.', lei: 'Art. 195. § 7º São isentas de contribuição para a seguridade social as entidades beneficentes de assistência social que atendam às exigências estabelecidas em lei.' },
-  { pergunta: 'A saúde é um direito de todos, mas o Estado só tem o dever de atendê-los se o cidadão for contribuinte.', resposta: 'E', explicacao: 'Falso. A saúde é dever do Estado e garantida a todos, independentemente de contribuição.', lei: 'Art. 196. A saúde é direito de todos e dever do Estado... acesso universal e igualitário...' },
-  { pergunta: 'Políticas sociais e econômicas que visem à redução do risco de doença são fundamentais para o direito à saúde.', resposta: 'C', explicacao: 'Correto. O foco é preventivo e coletivo.', lei: 'Art. 196. ...garantido mediante políticas sociais e econômicas que visem à redução do risco de doença e de outros agravos...' },
-  { pergunta: 'Ações e serviços de saúde são considerados de relevância pública.', resposta: 'C', explicacao: 'Correto. Por isso cabe ao Poder Público regulamentar, fiscalizar e controlar.', lei: 'Art. 197. São de relevância pública as ações e serviços de saúde...' },
-  { pergunta: 'A execução das ações de saúde deve ser feita exclusivamente pelo Poder Público de forma direta.', resposta: 'E', explicacao: 'Errado. Pode ser feita diretamente ou através de terceiros, inclusive por pessoas jurídicas de direito privado.', lei: 'Art. 197. ...devendo sua execução ser feita diretamente ou através de terceiros e, também, por pessoa física ou jurídica de direito privado.' },
-  { pergunta: 'As ações de saúde integram uma rede regionalizada e hierarquizada.', resposta: 'C', explicacao: 'Correto. Esta é a estrutura do sistema único.', lei: 'Art. 198. As ações e serviços públicos de saúde integram uma rede regionalizada e hierarquizada e constituem um sistema único...' },
-  { pergunta: 'A diretriz da descentralização na saúde exige direção única em cada esfera de governo.', resposta: 'C', explicacao: 'Correto. União, Estados e Municípios têm suas gestões próprias coordenadas.', lei: 'Art. 198. I - descentralização, com direção única em cada esfera de governo;' },
-  { pergunta: 'No SUS, as atividades curativas e assistenciais têm prioridade sobre as atividades preventivas.', resposta: 'E', explicacao: 'Falso. A prioridade é para as atividades PREVENTIVAS.', lei: 'Art. 198. II - atendimento integral, com prioridade para as atividades preventivas, sem prejuízo dos serviços assistenciais;' },
-  { pergunta: 'A participação da comunidade é uma das diretrizes do sistema único de saúde.', resposta: 'C', explicacao: 'Correto. O controle social é garantido.', lei: 'Art. 198. III - participação da comunidade.' },
-  { pergunta: 'A iniciativa privada é proibida de atuar na assistência à saúde.', resposta: 'E', explicacao: 'Errado. A assistência à saúde é LIVRE à iniciativa privada.', lei: 'Art. 199. A assistência à saúde é livre à iniciativa privada.' },
-  { pergunta: 'Hospitais privados podem participar do SUS de forma complementar mediante contrato ou convênio.', resposta: 'C', explicacao: 'Correto. É o que prevê o § 1º do Art. 199.', lei: 'Art. 199. § 1º As instituições privadas poderão participar de forma complementar do sistema único de saúde... mediante contrato de direito público ou convênio...' },
-  { pergunta: 'Na participação complementar do SUS, empresas com fins lucrativos têm preferência sobre as filantrópicas.', resposta: 'E', explicacao: 'Falso. A preferência é das entidades filantrópicas e das sem fins lucrativos.', lei: 'Art. 199. § 1º ...tendo preferência as entidades filantrópicas e as sem fins lucrativos.' },
-  { pergunta: 'Recursos públicos podem ser destinados a auxílios ou subvenções para hospitais privados que visam lucro.', resposta: 'E', explicacao: 'Falso. É vedada a destinação de recursos públicos para auxílios ou subvenções a instituições com fins lucrativos.', lei: 'Art. 199. § 2º É vedada a destinação de recursos públicos para auxílios ou subvenções às instituições privadas com fins lucrativos.' },
-  { pergunta: 'Compete ao sistema único de saúde fiscalizar substâncias de interesse para a saúde.', resposta: 'C', explicacao: 'Correto. Competência prevista no inciso I do Art. 200.', lei: 'Art. 200. I - controlar e fiscalizar procedimentos, produtos e substâncias de interesse para a saúde;' },
-  { pergunta: 'O SUS possui atribuição para executar ações de vigilância sanitária e epidemiológica.', resposta: 'C', explicacao: 'Correto. Consta no inciso II do Art. 200.', lei: 'Art. 200. II - executar as ações de vigilância sanitária e epidemiológica...' },
-  { pergunta: 'As ações de saúde do trabalhador não estão no rol de competências do sistema único de saúde.', resposta: 'E', explicacao: 'Errado. Estão expressamente incluídas no Art. 200, II.', lei: 'Art. 200. II - ...bem como as de saúde do trabalhador;' },
-  { pergunta: 'Participar da formulação da política de saneamento básico é uma das atribuições do SUS.', resposta: 'C', explicacao: 'Correto. Item previsto no inciso IV do Art. 200.', lei: 'Art. 200. IV - participar da formulação da política e da execução das ações de saneamento básico;' },
-  { pergunta: 'O SUS deve colaborar na proteção do meio ambiente, incluindo o ambiente de trabalho.', resposta: 'C', explicacao: 'Correto. Saúde e meio ambiente estão integrados na CF.', lei: 'Art. 200. VIII - colaborar na proteção do meio ambiente, nele compreendido o do trabalho.' },
-  { pergunta: 'A previdência social é organizada em regime geral, de caráter contributivo e filiação obrigatória.', resposta: 'C', explicacao: 'Correto. Diferente da assistência, na previdência é obrigatório contribuir e filiar-se se trabalhar.', lei: 'Art. 201. A previdência social será organizada sob a forma de regime geral, de caráter contributivo e de filiação obrigatória...' },
-  { pergunta: 'Critérios que preservem o equilíbrio financeiro e atuarial devem ser observados pela previdência social.', resposta: 'C', explicacao: 'Correto. Isso garante a sustentabilidade do sistema no tempo.', lei: 'Art. 201. ...observados critérios que preservem o equilíbrio financeiro e atuarial...' },
-  { pergunta: 'A previdência social cobre eventos de idade avançada e incapacidade temporária.', resposta: 'C', explicacao: 'Correto. Coberturas previstas no inciso I do Art. 201.', lei: 'Art. 201. I - cobertura dos eventos de incapacidade temporária ou permanente para o trabalho e idade avançada;' },
-  { pergunta: 'A proteção à maternidade, especialmente à gestante, é uma cobertura da previdência social.', resposta: 'C', explicacao: 'Correto. É o que dá base ao salário-maternidade.', lei: 'Art. 201. II - proteção à maternidade, especialmente à gestante;' },
-  { pergunta: 'A previdência protege o trabalhador em qualquer situação de desemprego, inclusive o voluntário.', resposta: 'E', explicacao: 'Errado. A proteção é apenas para o desemprego INVOLUNTÁRIO.', lei: 'Art. 201. III - proteção ao trabalhador em situação de desemprego involuntário;' },
-  { pergunta: 'Salário-família e auxílio-reclusão são devidos a todos os segurados, independentemente da renda.', resposta: 'E', explicacao: 'Falso. São benefícios destinados apenas aos dependentes dos segurados de BAIXA RENDA.', lei: 'Art. 201. IV - salário-família e auxílio-reclusão para os dependentes dos segurados de baixa renda;' },
-  { pergunta: 'A pensão por morte é devida aos dependentes do segurado homem, mas não do segurado mulher.', resposta: 'E', explicacao: 'Errado. A Constituição garante igualdade para segurado homem ou mulher.', lei: 'Art. 201. V - pensão por morte do segurado, homem ou mulher...' },
-  { pergunta: 'Nenhum benefício que substitua o rendimento do trabalho do segurado terá valor mensal inferior ao salário mínimo.', resposta: 'C', explicacao: 'Correto. É o piso constitucional para benefícios substitutivos da renda.', lei: 'Art. 201. § 2º Nenhum benefício que substitua o salário de contribuição ou o rendimento do trabalho do segurado terá valor mensal inferior ao salário mínimo.' },
-  { pergunta: 'O regime de previdência privada é facultativo e baseia-se na constituição de reservas.', resposta: 'C', explicacao: 'Correto. É complementar ao regime geral.', lei: 'Art. 202. O regime de previdência privada... será facultativo, baseado na constituição de reservas...' },
-  { pergunta: 'Lei ordinária regulamenta a previdência privada.', resposta: 'E', explicacao: 'Falso. O regime de previdência privada é regulado por LEI COMPLEMENTAR.', lei: 'Art. 202. ...e regulado por lei complementar.' },
-  { pergunta: 'Participantes de planos de previdência privada têm direito ao pleno acesso às informações de gestão.', resposta: 'C', explicacao: 'Correto. Garantido no § 1º do Art. 202.', lei: 'Art. 202. § 1º A lei complementar assegurará ao participante... o pleno acesso às informações relativas à gestão...' },
-  { pergunta: 'As contribuições do empregador para previdência privada integram o contrato de trabalho do participante.', resposta: 'E', explicacao: 'Falso. Elas NÃO integram o contrato de trabalho nem a remuneração.', lei: 'Art. 202. § 2º As contribuições do empregador... não integram o contrato de trabalho dos participantes...' },
-  { pergunta: 'A União é proibida de aportar recursos em entidade de previdência privada, salvo como patrocinadora.', resposta: 'C', explicacao: 'Correto. É vedado o aporte salvo na qualidade de patrocinador.', lei: 'Art. 202. § 3º É vedado o aporte de recursos a entidade de previdência privada pela União... salvo na qualidade de patrocinador...' },
-  { pergunta: 'Na qualidade de patrocinadora, a contribuição normal da União para a previdência privada pode ser o triplo da do segurado.', resposta: 'E', explicacao: 'Falso. Em hipótese alguma a contribuição do patrocinador excederá a do segurado.', lei: 'Art. 202. § 3º ...em hipótese alguma, sua contribuição normal poderá exceder a do segurado.' },
-  { pergunta: 'A assistência social só atende quem pagou contribuição para a seguridade social.', resposta: 'E', explicacao: 'Errado. A assistência social é prestada INDEPENDENTEMENTE de contribuição.', lei: 'Art. 203. A assistência social será prestada a quem dela necessitar, independentemente de contribuição à seguridade social...' },
-  { pergunta: 'A proteção à família e à maternidade são objetivos da assistência social.', resposta: 'C', explicacao: 'Correto. Consta no inciso I do Art. 203.', lei: 'Art. 203. I - a proteção à família, à maternidade, à infância, à adolescência e à velhice;' },
-  { pergunta: 'O amparo às crianças carentes é um dos objetivos da assistência social.', resposta: 'C', explicacao: 'Correto. Previsto no inciso II do Art. 203.', lei: 'Art. 203. II - o amparo às crianças e adolescentes carentes;' },
-  { pergunta: 'A promoção da integração ao mercado de trabalho é um objetivo da assistência social.', resposta: 'C', explicacao: 'Correto. Visa a autonomia do assistido.', lei: 'Art. 203. III - a promoção da integração ao mercado de trabalho;' },
-  { pergunta: 'A reabilitação das pessoas com deficiência é competência da assistência social.', resposta: 'C', explicacao: 'Correto. Visa a integração à vida comunitária.', lei: 'Art. 203. IV - a habilitação e reabilitação das pessoas portadoras de deficiência e a promoção de sua integração à vida comunitária;' },
-  { pergunta: 'Pessoas com deficiência e idosos que não possuem meios de manutenção têm garantia de um salário mínimo mensal.', resposta: 'C', explicacao: 'Correto. É o benefício assistencial (BPC).', lei: 'Art. 203. V - a garantia de um salário mínimo de benefício mensal à pessoa com deficiência e ao idoso...' },
-  { pergunta: 'O benefício assistencial ao idoso depende de ele provar que a família não tem meios de sustentá-lo.', resposta: 'C', explicacao: 'Correto. O idoso deve comprovar não possuir meios de manutenção nem tê-la provida pela família.', lei: 'Art. 203. V - ...que comprovem não possuir meios de prover à própria manutenção ou de tê-la provida por sua família...' },
-  { pergunta: 'As ações de assistência social são organizadas de forma centralizada pelo Governo Federal.', resposta: 'E', explicacao: 'Errado. A diretriz é a DESCENTRALIZAÇÃO político-administrativa.', lei: 'Art. 204. I - descentralização político-administrativa...' },
-  { pergunta: 'Cabe à esfera federal a coordenação e as normas gerais da assistência social.', resposta: 'C', explicacao: 'Correto. A execução fica com estados, municípios e entidades.', lei: 'Art. 204. I - ...cabendo a coordenação e as normas gerais à esfera federal e a execução... às esferas estadual e municipal...' },
-  { pergunta: 'Entidades beneficentes de assistência social podem executar programas de assistência social governamentais.', resposta: 'C', explicacao: 'Correto. Previsto na diretriz de descentralização.', lei: 'Art. 204. I - ...bem como a entidades beneficentes e de assistência social;' },
-  { pergunta: 'A população participa da formulação das políticas de assistência social por meio de organizações representativas.', resposta: 'C', explicacao: 'Correto. É o controle social da assistência.', lei: 'Art. 204. II - participação da população, por meio de organizações representativas...' },
-  { pergunta: 'A seguridade social é um conjunto desintegrado de ações.', resposta: 'E', explicacao: 'Falso. A Constituição diz que é um conjunto INTEGRADO.', lei: 'Art. 194. A seguridade social compreende um conjunto integrado de ações...' },
-  { pergunta: 'A diversidade da base de financiamento impede a transparência contábil entre as áreas.', resposta: 'E', explicacao: 'Errado. A lei exige justamente a identificação em rubricas específicas para garantir transparência.', lei: 'Art. 194. Parágrafo único, VI - ...identificando-se, em rubricas contábeis específicas para cada área...' },
-  { pergunta: 'A gestão da seguridade social é tripartite.', resposta: 'E', explicacao: 'Falso. É quadripartite (Trabalhadores, Empregadores, Aposentados e Governo).', lei: 'Art. 194. Parágrafo único, VII - ...mediante gestão quadripartite...' },
-  { pergunta: 'O financiamento da seguridade social é exclusivamente direto.', resposta: 'E', explicacao: 'Errado. É de forma direta E indireta.', lei: 'Art. 195. A seguridade social será financiada por toda a sociedade, de forma direta e indireta...' },
-  { pergunta: 'Contribuições sociais do empregador podem incidir sobre o faturamento.', resposta: 'C', explicacao: 'Correto. Previsto na alínea "b" do inciso I do Art. 195.', lei: 'Art. 195. I, b) a receita ou o faturamento;' },
-  { pergunta: 'Não há incidência de contribuição previdenciária sobre pensões concedidas pelo RGPS.', resposta: 'C', explicacao: 'Correto. Existe imunidade constitucional.', lei: 'Art. 195. II - ...não incidindo contribuição sobre aposentadoria e pensão concedidas pelo Regime Geral de Previdência Social;' },
-  { pergunta: 'A anterioridade mitigada da seguridade social é de 120 dias.', resposta: 'E', explicacao: 'Errado. O prazo é de 90 dias.', lei: 'Art. 195. § 6º ...após decorridos noventa dias da data da publicação da lei...' },
-  { pergunta: 'O Poder Público deve regulamentar e fiscalizar as ações de saúde.', resposta: 'C', explicacao: 'Correto. Devido à sua relevância pública.', lei: 'Art. 197. ...cabendo ao Poder Público dispor, nos termos da lei, sobre sua regulamentação, fiscalização e controle...' },
-  { pergunta: 'O sistema único de saúde é organizado de forma centralizada.', resposta: 'E', explicacao: 'Falso. A diretriz é a descentralização.', lei: 'Art. 198. I - descentralização, com direção única em cada esfera de governo;' },
-  { pergunta: 'As instituições privadas só podem participar do SUS de forma complementar.', resposta: 'C', explicacao: 'Correto. O sistema público é a base; o privado complementa.', lei: 'Art. 199. § 1º As instituições privadas poderão participar de forma complementar do sistema único de saúde...' },
-  { pergunta: 'O SUS participa da execução de ações de saneamento básico.', resposta: 'C', explicacao: 'Correto. Item expresso no inciso IV do Art. 200.', lei: 'Art. 200. IV - participar da formulação da política e da execução das ações de saneamento básico;' },
-  { pergunta: 'A previdência social organizada sob regime geral exige filiação obrigatória.', resposta: 'C', explicacao: 'Correto. Se exercer atividade remunerada abrangida, a filiação é automática e obrigatória.', lei: 'Art. 201. A previdência social será organizada sob a forma de regime geral... de filiação obrigatória...' },
-  { pergunta: 'A cobertura de idade avançada é atribuição da assistência social, não da previdência.', resposta: 'E', explicacao: 'Errado. É atribuição da PREVIDÊNCIA social conforme Art. 201, I.', lei: 'Art. 201. I - cobertura dos eventos de incapacidade temporária ou permanente para o trabalho e idade avançada;' },
-  { pergunta: 'Dependentes de segurados de alta renda têm direito ao auxílio-reclusão.', resposta: 'E', explicacao: 'Errado. Somente os dependentes de segurados de BAIXA RENDA.', lei: 'Art. 201. IV - ...auxílio-reclusão para os dependentes dos segurados de baixa renda;' },
-  { pergunta: 'A previdência privada baseia-se na constituição de reservas.', resposta: 'C', explicacao: 'Correto. Diferente do RGPS, que é repartição simples.', lei: 'Art. 202. ...baseado na constituição de reservas que garantam o benefício contratado...' },
-  { pergunta: 'A assistência social é prestada sempre independentemente de contribuição.', resposta: 'C', explicacao: 'Correto. A palavra de perigo "sempre" aqui não invalida a questão, pois é a regra constitucional.', lei: 'Art. 203. A assistência social será prestada a quem dela necessitar, independentemente de contribuição à seguridade social...' },
-  { pergunta: 'O objetivo da assistência social é o amparo exclusivo aos idosos.', resposta: 'E', explicacao: 'Palavra de perigo "exclusivo". O amparo estende-se a crianças, adolescentes, famílias e deficientes.', lei: 'Art. 203. (Incisos I a V)' },
-  { pergunta: 'A descentralização político-administrativa é diretriz da assistência social.', resposta: 'C', explicacao: 'Correto. Previsto no inciso I do Art. 204.', lei: 'Art. 204. I - descentralização político-administrativa...' },
-  { pergunta: 'Empresas públicas podem aportar recursos em previdência privada apenas como patrocinadoras.', resposta: 'C', explicacao: 'Correto. Vedado aporte fora dessa qualidade.', lei: 'Art. 202. § 3º É vedado o aporte de recursos... salvo na qualidade de patrocinador...' },
-  { pergunta: 'A participação comunitária é diretriz da saúde, mas não da assistência.', resposta: 'E', explicacao: 'Errado. É diretriz de AMBAS.', lei: 'Art. 198, III e Art. 204, II.' },
-  { pergunta: 'O SUS deve colaborar na proteção do ambiente de trabalho.', resposta: 'C', explicacao: 'Correto. Inciso VIII do Art. 200.', lei: 'Art. 200. VIII - colaborar na proteção do meio ambiente, nele compreendido o do trabalho.' },
-  { pergunta: 'Nenhum benefício assistencial pode ser inferior ao salário mínimo.', resposta: 'E', explicacao: 'Cuidado! A Constituição garante um salário mínimo especificamente para o benefício do inciso V (idosos e deficientes miseráveis). Outros auxílios assistenciais menores podem existir conforme a lei.', lei: 'Art. 203. V - a garantia de um salário mínimo de benefício mensal à pessoa com deficiência e ao idoso...' },
-  { pergunta: 'A previdência social cobre o desemprego involuntário.', resposta: 'C', explicacao: 'Correto. Inciso III do Art. 201.', lei: 'Art. 201. III - proteção ao trabalhador em situação de desemprego involuntário;' },
-  { pergunta: 'A iniciativa privada pode participar do SUS de forma complementar.', resposta: 'C', explicacao: 'Correto. § 1º do Art. 199.', lei: 'Art. 199. § 1º As instituições privadas poderão participar de forma complementar do sistema único de saúde...' },
-  { pergunta: 'O financiamento da seguridade inclui recursos dos Municípios.', resposta: 'C', explicacao: 'Correto. Art. 195.', lei: 'Art. 195. ...recursos provenientes dos orçamentos da União, dos Estados, do Distrito Federal e dos Municípios...' },
-  { pergunta: 'A equidade no custeio é um objetivo da seguridade.', resposta: 'C', explicacao: 'Correto. Inciso V do Art. 194.', lei: 'Art. 194. Parágrafo único, V - equidade na forma de participação no custeio;' },
-  { pergunta: 'A seguridade assegura direitos relativos à educação.', resposta: 'E', explicacao: 'Errado. Saúde, previdência e assistência.', lei: 'Art. 194. ...destinadas a assegurar os direitos relativos à saúde, à previdência e à assistência social.' },
-  { pergunta: 'O caráter democrático da gestão é diretriz da seguridade.', user: 'C', explicacao: 'Correto. Inciso VII do Art. 194.', lei: 'Art. 194. Parágrafo único, VII - caráter democrático e descentralizado da administração...' },
-  { pergunta: 'A vigilância sanitária é competência do SUS.', resposta: 'C', explicacao: 'Correto. Inciso II do Art. 200.', lei: 'Art. 200. II - executar as ações de vigilância sanitária e epidemiológica...' },
-  { pergunta: 'O auxílio-reclusão é pago ao preso.', resposta: 'E', explicacao: 'Errado. É pago aos DEPENDENTES do segurado preso.', lei: 'Art. 201. IV - ...auxílio-reclusão para os dependentes dos segurados de baixa renda;' },
-  { pergunta: 'A saúde é dever da família e direito do Estado.', resposta: 'E', explicacao: 'Invertido! É direito de TODOS e dever do ESTADO.', lei: 'Art. 196. A saúde é direito de todos e dever do Estado...' },
-  { pergunta: 'O SUS fiscaliza substâncias de interesse para a saúde.', resposta: 'C', explicacao: 'Correto. Inciso I do Art. 200.', lei: 'Art. 200. I - controlar e fiscalizar procedimentos, produtos e substâncias de interesse para a saúde;' },
-  { pergunta: 'Previdência privada é obrigatoriamente vinculada ao RGPS.', resposta: 'E', explicacao: 'Errado. Ela é autônoma e facultativa.', lei: 'Art. 202. O regime de previdência privada, de caráter complementar e autônomo em relação ao regime geral...' },
-  { pergunta: 'O salário mínimo é o valor piso para benefícios substitutivos de renda.', resposta: 'C', explicacao: 'Correto. § 2º do Art. 201.', lei: 'Art. 201. § 2º Nenhum benefício que substitua o salário de contribuição... terá valor mensal inferior ao salário mínimo.' },
-  { pergunta: 'A seguridade social é financiada apenas pelo Governo Federal.', resposta: 'E', explicacao: 'Falso. Toda a sociedade e todos os entes federados financiam.', lei: 'Art. 195.' },
-  { pergunta: 'A assistência social promove a integração ao mercado de trabalho.', resposta: 'C', explicacao: 'Correto. Inciso III do Art. 203.', lei: 'Art. 203. III - a promoção da integração ao mercado de trabalho;' },
-  { pergunta: 'A rede de saúde é regionalizada.', resposta: 'C', explicacao: 'Correto. Caput do Art. 198.', lei: 'Art. 198. As ações e serviços públicos de saúde integram uma rede regionalizada...' }
-];
+const bancoQuestoes = {
+  "Conceitos e Objetivos (Art. 194)": [
+    { 
+      pergunta: 'A seguridade social compreende um conjunto de ações de iniciativa exclusiva do Poder Público para assegurar direitos à saúde, previdência e assistência social.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: O erro está na "palavra de perigo" EXCLUSIVA. A seguridade é um esforço conjunto entre o Poder Público e a SOCIEDADE.', 
+      lei: 'Art. 194. A seguridade social compreende um conjunto integrado de ações de iniciativa dos Poderes Públicos e da sociedade...' 
+    },
+    { 
+      pergunta: 'Compete à sociedade, de forma independente, organizar a seguridade social por meio de leis e decretos.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: A ORGANIZAÇÃO é competência do Poder Público.', 
+      lei: 'Art. 194. Parágrafo único. Compete ao Poder Público, nos termos da lei, organizar a seguridade social...' 
+    },
+    { 
+      pergunta: 'A universalidade da cobertura e do atendimento é um dos objetivos que norteiam a organização da seguridade social.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Certinho! Cobertura = Riscos; Atendimento = Pessoas.', 
+      lei: 'Art. 194. I - universalidade da cobertura e do atendimento;' 
+    },
+    { 
+      pergunta: 'A Constituição exige que os benefícios e serviços prestados às populações rurais sejam sempre superiores aos das populações urbanas.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Devem ser UNIFORMES e EQUIVALENTES.', 
+      lei: 'Art. 194. II - uniformidade e equivalência dos benefícios e serviços às populações urbanas e rurais;' 
+    },
+    { 
+      pergunta: 'A seletividade e distributividade na prestação dos benefícios e serviços é um objetivo constitucional da seguridade social.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Seleciona-se o que cobrir e distribui-se para quem mais precisa.', 
+      lei: 'Art. 194. III - seletividade e distributividade na prestação dos benefícios e serviços;' 
+    },
+    { 
+      pergunta: 'O princípio da irredutibilidade do valor dos benefícios garante que o valor nominal recebido pelo segurado não seja diminuído.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: É uma proteção para o valor em dinheiro do benefício.', 
+      lei: 'Art. 194. IV - irredutibilidade do valor dos benefícios;' 
+    },
+    { 
+      pergunta: 'A equidade na forma de participação no custeio significa que todos os cidadãos devem contribuir com o mesmo valor absoluto, independentemente da renda.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Equidade é proporcionalidade: quem ganha mais paga mais.', 
+      lei: 'Art. 194. V - equidade na forma de participação no custeio;' 
+    },
+    { 
+      pergunta: 'A diversidade da base de financiamento é um objetivo que dispensa a identificação de rubricas contábeis específicas para cada área da seguridade.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: A lei EXIGE rubricas contábeis específicas para cada área.', 
+      lei: 'Art. 194. VI - diversidade da base de financiamento, identificando-se, em rubricas contábeis específicas para cada área...' 
+    },
+    { 
+      pergunta: 'O caráter contributivo é uma característica que deve ser preservada em todas as áreas da seguridade social, incluindo saúde e assistência.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Caráter contributivo é EXCLUSIVO da Previdência Social.', 
+      lei: 'Art. 194. VI - ...preservado o caráter contributivo da previdência social;' 
+    },
+    { 
+      pergunta: 'A gestão da seguridade social é quadripartite, contando com a participação de trabalhadores, empregadores, aposentados e do Governo.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Correto. Memorize os 4 grupos participantes.', 
+      lei: 'Art. 194. VII - caráter democrático e descentralizado da administração, mediante gestão quadripartite...' 
+    }
+  ],
+  "Financiamento da Seguridade (Art. 195)": [
+    { 
+      pergunta: 'A seguridade social será financiada por toda a sociedade, mas apenas de forma indireta, mediante impostos federais.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: O financiamento é DIRETO e INDIRETO.', 
+      lei: 'Art. 195. A seguridade social será financiada por toda a sociedade, de forma direta e indireta...' 
+    },
+    { 
+      pergunta: 'As empresas devem contribuir para a seguridade social incidindo sobre a folha de salários, a receita ou o faturamento e o lucro.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: São as três bases de cálculo clássicas das empresas.', 
+      lei: 'Art. 195. I - do empregador... incidentes sobre: a) folha de salários... b) receita ou faturamento; c) lucro;' 
+    },
+    { 
+      pergunta: 'Incide contribuição social sobre os rendimentos pagos a pessoa física que preste serviço à empresa, mesmo que não haja vínculo empregatício.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Se houve trabalho pago, tem contribuição, com ou sem vínculo.', 
+      lei: 'Art. 195. I - a) ...mesmo sem vínculo empregatício;' 
+    },
+    { 
+      pergunta: 'Os aposentados e pensionistas do Regime Geral de Previdência Social devem sempre contribuir para a seguridade sobre o valor de seus benefícios.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: É PROIBIDO cobrar contribuição de aposentados do RGPS (INSS).', 
+      lei: 'Art. 195. II - ...não incidindo contribuição sobre aposentadoria e pensão concedidas pelo Regime Geral de Previdência Social;' 
+    },
+    { 
+      pergunta: 'As receitas provenientes de concursos de prognósticos, como loterias, financiam a seguridade social.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Fontes de loterias vão para o financiamento social.', 
+      lei: 'Art. 195. III - sobre a receita de concursos de prognósticos;' 
+    },
+    { 
+      pergunta: 'O importador de bens ou serviços do exterior é um financiador da seguridade social.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Importadores são contribuintes por força do inciso IV.', 
+      lei: 'Art. 195. IV - do importador de bens ou serviços do exterior...' 
+    },
+    { 
+      pergunta: 'Nenhum benefício ou serviço da seguridade social poderá ser criado ou majorado sem a correspondente fonte de custeio total.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Regra da Contrapartida (Art. 195, §5º).', 
+      lei: 'Art. 195. § 5º Nenhum benefício ou serviço da seguridade social poderá ser criado... sem a correspondente fonte de custeio total.' 
+    },
+    { 
+      pergunta: 'As novas contribuições sociais podem ser cobradas imediatamente após a publicação da lei que as instituiu.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Errado. Deve-se esperar 90 dias (Noventena).', 
+      lei: 'Art. 195. § 6º As contribuições sociais... só poderão ser exigidas após decorridos noventa dias...' 
+    },
+    { 
+      pergunta: 'Entidades beneficentes de assistência social gozam de isenção de contribuição, independentemente de requisitos estabelecidos em lei.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Elas PRECISAM atender aos requisitos da lei para serem isentas.', 
+      lei: 'Art. 195. § 7º São isentas... as entidades beneficentes... que atendam às exigências estabelecidas em lei.' 
+    },
+    { 
+      pergunta: 'A seguridade social é financiada exclusivamente por recursos provenientes do orçamento da União.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Vem da União, Estados, DF e Municípios.', 
+      lei: 'Art. 195. ...recursos provenientes dos orçamentos da União, dos Estados, do Distrito Federal e dos Municípios...' 
+    }
+  ],
+  "Saúde (Arts. 196-200)": [
+    { 
+      pergunta: 'A saúde é direito de todos e dever do Estado, garantido apenas para aqueles que contribuem para o sistema.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: A saúde é UNIVERSAL e independente de pagamento.', 
+      lei: 'Art. 196. A saúde é direito de todos e dever do Estado... acesso universal e igualitário...' 
+    },
+    { 
+      pergunta: 'As ações e serviços de saúde são de relevância pública, cabendo ao Poder Público sua regulamentação, fiscalização e controle.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: O Governo deve fiscalizar o setor público e o privado na saúde.', 
+      lei: 'Art. 197. São de relevância pública as ações e serviços de saúde...' 
+    },
+    { 
+      pergunta: 'As ações de saúde devem ser executadas obrigatoriamente e exclusivamente de forma direta pelo Poder Público.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Pode ser feito diretamente ou via terceiros.', 
+      lei: 'Art. 197. ...devendo sua execução ser feita diretamente ou através de terceiros...' 
+    },
+    { 
+      pergunta: 'As ações e serviços públicos de saúde constituem um sistema único, organizado em rede regionalizada e hierarquizada.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Base organizacional do SUS.', 
+      lei: 'Art. 198. ...integram uma rede regionalizada e hierarquizada e constituem um sistema único...' 
+    },
+    { 
+      pergunta: 'A descentralização na saúde pressupõe uma direção única em cada esfera de governo.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Direção única em cada nível (Federal, Estadual, Municipal).', 
+      lei: 'Art. 198. I - descentralização, com direção única em cada esfera de governo;' 
+    },
+    { 
+      pergunta: 'No sistema de saúde, as atividades curativas e assistenciais devem sempre ter prioridade sobre as preventivas.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Prioridade absoluta para as atividades PREVENTIVAS.', 
+      lei: 'Art. 198. II - atendimento integral, com prioridade para as atividades preventivas...' 
+    },
+    { 
+      pergunta: 'A participação da comunidade é uma das diretrizes constitucionais do SUS.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Refere-se aos Conselhos e Conferências de Saúde.', 
+      lei: 'Art. 198. III - participação da comunidade.' 
+    },
+    { 
+      pergunta: 'A assistência à saúde é livre à iniciativa privada.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: O setor privado pode atuar livremente na saúde.', 
+      lei: 'Art. 199. A assistência à saúde é livre à iniciativa privada.' 
+    },
+    { 
+      pergunta: 'As instituições privadas podem participar do SUS de forma complementar, tendo preferência as entidades com fins lucrativos.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Preferência para entidades FILANTRÓPICAS e sem fins lucrativos.', 
+      lei: 'Art. 199. § 1º ...tendo preferência as entidades filantrópicas e as sem fins lucrativos.' 
+    },
+    { 
+      pergunta: 'Compete ao SUS participar da formulação da política de saneamento básico.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Saneamento básico é competência do SUS (Art. 200, IV).', 
+      lei: 'Art. 200. IV - participar da formulação da política e da execução das ações de saneamento básico;' 
+    }
+  ],
+  "Previdência Social (Art. 201-202)": [
+    { 
+      pergunta: 'A previdência social é organizada sob a forma de regime geral, de caráter contributivo e de filiação facultativa.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: A filiação é OBRIGATÓRIA para quem trabalha.', 
+      lei: 'Art. 201. A previdência social será organizada... de filiação obrigatória...' 
+    },
+    { 
+      pergunta: 'A previdência social deve observar critérios que preservem o equilíbrio financeiro e atuarial.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Sustentabilidade do sistema a curto e longo prazo.', 
+      lei: 'Art. 201. ...observados critérios que preservem o equilíbrio financeiro e atuarial...' 
+    },
+    { 
+      pergunta: 'A cobertura dos eventos de incapacidade temporária para o trabalho é atribuição da previdência.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Base para o auxílio por incapacidade temporária.', 
+      lei: 'Art. 201. I - cobertura dos eventos de incapacidade temporária ou permanente...' 
+    },
+    { 
+      pergunta: 'A proteção ao desemprego involuntário é um dever do sistema previdenciário.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Direito fundamental do trabalhador segurado.', 
+      lei: 'Art. 201. III - proteção ao trabalhador em situação de desemprego involuntário;' 
+    },
+    { 
+      pergunta: 'O salário-família e o auxílio-reclusão são devidos a todos os dependentes de segurados, independentemente da renda.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Apenas para dependentes de segurados de BAIXA RENDA.', 
+      lei: 'Art. 201. IV - salário-família e auxílio-reclusão para os dependentes dos segurados de baixa renda;' 
+    },
+    { 
+      pergunta: 'Nenhum benefício que substitua o rendimento do trabalho terá valor mensal inferior ao salário mínimo.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Piso previdenciário constitucional.', 
+      lei: 'Art. 201. § 2º Nenhum benefício que substitua o salário... terá valor mensal inferior ao salário mínimo.' 
+    },
+    { 
+      pergunta: 'O regime de previdência privada tem caráter complementar e filiação facultativa.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Previdência complementar é sempre facultativa.', 
+      lei: 'Art. 202. O regime de previdência privada... será facultativo...' 
+    },
+    { 
+      pergunta: 'As contribuições do empregador para la previdência privada integram o contrato de trabalho.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Elas NÃO integram o contrato de trabalho.', 
+      lei: 'Art. 202. § 2º As contribuições do empregador... não integram o contrato de trabalho...' 
+    },
+    { 
+      pergunta: 'É vedado o aporte de recursos públicos para previdência privada, salvo como patrocinador.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Regra de ouro para evitar desvio de dinheiro público para fundos privados.', 
+      lei: 'Art. 202. § 3º É vedado o aporte de recursos... salvo na qualidade de patrocinador...' 
+    },
+    { 
+      pergunta: 'A contribuição normal do ente público patrocinador poderá exceder a do segurado na previdência privada.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Em hipótese alguma a cota do Estado excederá a do segurado.', 
+      lei: 'Art. 202. § 3º ...em hipótese alguma, sua contribuição normal poderá exceder a do segurado.' 
+    }
+  ],
+  "Assistência Social (Art. 203-204)": [
+    { 
+      pergunta: 'A assistência social será prestada exclusivamente para aqueles que contribuíram por pelo menos 12 meses.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Prestada INDEPENDENTEMENTE de contribuição.', 
+      lei: 'Art. 203. A assistência social será prestada... independentemente de contribuição à seguridade social...' 
+    },
+    { 
+      pergunta: 'Um objetivo da assistência social é a proteção à maternidade e à infância.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Objetivos claros no Art. 203, inciso I.', 
+      lei: 'Art. 203. I - a proteção à família, à maternidade, à infância, à adolescência e à velhice;' 
+    },
+    { 
+      pergunta: 'A assistência social visa a promoção da integração ao mercado de trabalho.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Objetivo do inciso III.', 
+      lei: 'Art. 203. III - a promoção da integração ao mercado de trabalho;' 
+    },
+    { 
+      pergunta: 'A habilitação de pessoas com deficiência é objetivo exclusivo da área da saúde.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: É objetivo expresso da Assistência Social.', 
+      lei: 'Art. 203. IV - a habilitação e reabilitação das pessoas portadoras de deficiência...' 
+    },
+    { 
+      pergunta: 'A Constituição garante um benefício mensal de um salário mínimo ao idoso pobre.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Refere-se ao BPC (Art. 203, V).', 
+      lei: 'Art. 203. V - a garantia de um salário mínimo de benefício mensal... ao idoso que comprovem não possuir meios...' 
+    },
+    { 
+      pergunta: 'O benefício de um salário mínimo assistencial é devido se a família puder sustentar o idoso.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Só é devido se a família TAMBÉM não puder sustentar.', 
+      lei: 'Art. 203. V - ...ou de tê-la provida por sua família, conforme dispuser a lei.' 
+    },
+    { 
+      pergunta: 'As ações da assistência social devem ser organizadas com base na centralização federal.', 
+      resposta: 'E', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: A diretriz é DESCENTRALIZAÇÃO.', 
+      lei: 'Art. 204. I - descentralização político-administrativa...' 
+    },
+    { 
+      pergunta: 'Cabe à esfera federal a coordenação e as normas gerais da assistência social.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Coordenação da União e execução de estados/municípios.', 
+      lei: 'Art. 204. I - ...cabendo a coordenação e as normas gerais à esfera federal...' 
+    },
+    { 
+      pergunta: 'Entidades beneficentes podem executar programas de assistência social.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: A execução pode ser feita pelo governo ou por entidades privadas sem fins lucrativos.', 
+      lei: 'Art. 204. I - ...e a execução... às esferas estadual e municipal, bem como a entidades beneficentes...' 
+    },
+    { 
+      pergunta: 'A participação da população na formulação das políticas de assistência ocorre em todos os níveis.', 
+      resposta: 'C', 
+      explicacao: 'EXPLICAÇÃO COMPLETA: Controle social em todos os níveis federativos.', 
+      lei: 'Art. 204. II - participação da população... em todos os níveis.' 
+    }
+  ]
+};
+
+
+const bancoQuestoesLacunas = {
+  "Artigos 194 a 204 (Lacunas)": [
+    { 
+      pergunta: 'A seguridade social compreende um conjunto _______ de ações de iniciativa dos Poderes Públicos e da sociedade.', 
+      resposta: 'integrado', 
+      explicacao: 'A seguridade une Saúde, Previdência e Assistência em um sistema integrado.', 
+      lei: 'Art. 194. A seguridade social compreende um conjunto integrado de ações...' 
+    },
+    { 
+      pergunta: 'Compete ao _______, nos termos da lei, organizar a seguridade social.', 
+      resposta: 'Poder Público', 
+      explicacao: 'Iniciativa de todos, mas organização do Estado.', 
+      lei: 'Art. 194. Parágrafo único. Compete ao Poder Público...' 
+    },
+    { 
+      pergunta: 'I - _______ da cobertura e do atendimento.', 
+      resposta: 'universalidade', 
+      explicacao: 'Objetivo de atingir a todos os riscos e pessoas.', 
+      lei: 'I - universalidade da cobertura e do atendimento;' 
+    },
+    { 
+      pergunta: 'II - uniformidade e _______ dos benefícios e serviços às populações urbanas e rurais.', 
+      resposta: 'equivalência', 
+      explicacao: 'Tratamento igual para quem mora no campo ou na cidade.', 
+      lei: 'II - uniformidade e equivalência...' 
+    },
+    { 
+      pergunta: 'III - _______ e distributividade na prestação dos benefícios e serviços.', 
+      resposta: 'seletividade', 
+      explicacao: 'Seleção dos riscos prioritários para cobertura.', 
+      lei: 'III - seletividade e distributividade...' 
+    },
+    { 
+      pergunta: 'IV - _______ do valor dos benefícios.', 
+      resposta: 'irredutibilidade', 
+      explicacao: 'O valor não pode ser reduzido pelo governo.', 
+      lei: 'IV - irredutibilidade do valor dos benefícios;' 
+    },
+    { 
+      pergunta: 'V - _______ na forma de participação no custeio.', 
+      resposta: 'equidade', 
+      explicacao: 'Justiça: quem tem mais, contribui com mais.', 
+      lei: 'V - equidade na forma de participação no custeio;' 
+    },
+    { 
+      pergunta: 'VI - diversidade da base de _______, identificando-se em rubricas contábeis específicas.', 
+      resposta: 'financiamento', 
+      explicacao: 'Múltiplas fontes para garantir o sustento do sistema.', 
+      lei: 'VI - diversidade da base de financiamento...' 
+    },
+    { 
+      pergunta: 'VII - administração mediante gestão _______, com participação de trabalhadores, empregadores, aposentados e Governo.', 
+      resposta: 'quadripartite', 
+      explicacao: 'Participação das 4 partes nos órgãos colegiados.', 
+      lei: 'VII - ...mediante gestão quadripartite...' 
+    },
+    { 
+      pergunta: 'A previdência social deve obrigatoriamente preservar seu caráter _______.', 
+      resposta: 'contributivo', 
+      explicacao: 'Diferente de saúde/assistência, na previdência tem que pagar.', 
+      lei: 'Art. 194. VI - ...preservado o caráter contributivo da previdência social;' 
+    },
+    { 
+      pergunta: 'A seguridade social será financiada por toda a sociedade, de forma direta e _______.', 
+      resposta: 'indireta', 
+      explicacao: 'Direta (contribuições) e Indireta (orçamentos públicos).', 
+      lei: 'Art. 195. A seguridade social será financiada... direta e indireta...' 
+    },
+    { 
+      pergunta: 'I - do empregador, incidentes sobre: a) a _______ e demais rendimentos do trabalho.', 
+      resposta: 'folha de salários', 
+      explicacao: 'Principal base de custeio patronal.', 
+      lei: 'I - a) a folha de salários e demais rendimentos...' 
+    },
+    { 
+      pergunta: 'As contribuições do empregador incidem mesmo sem _______ entre a empresa e a pessoa física.', 
+      resposta: 'vínculo empregatício', 
+      explicacao: 'Incide sobre prestadores de serviço sem carteira assinada.', 
+      lei: 'I - a) ...mesmo sem vínculo empregatício;' 
+    },
+    { 
+      pergunta: 'I - b) incidentes sobre a receita ou o _______.', 
+      resposta: 'faturamento', 
+      explicacao: 'Uma das bases para empresas (Cofins/PIS).', 
+      lei: 'I - b) a receita ou o faturamento;' 
+    },
+    { 
+      pergunta: 'I - c) incidentes sobre o _______.', 
+      resposta: 'lucro', 
+      explicacao: 'Base para a CSLL.', 
+      lei: 'I - c) o lucro;' 
+    },
+    { 
+      pergunta: 'III - incidentes sobre a receita de concursos de _______.', 
+      resposta: 'prognósticos', 
+      explicacao: 'Loterias e sorteios numéricos.', 
+      lei: 'III - sobre a receita de concursos de prognósticos;' 
+    },
+    { 
+      pergunta: 'IV - do _______ de bens ou serviços do exterior.', 
+      resposta: 'importador', 
+      explicacao: 'Quem importa contribui para equilibrar com o mercado interno.', 
+      lei: 'IV - do importador de bens ou serviços do exterior...' 
+    },
+    { 
+      pergunta: '§ 5º Nenhum benefício poderá ser criado sem a correspondente fonte de _______ total.', 
+      resposta: 'custeio', 
+      explicacao: 'Regra da contrapartida (pré-financiamento).', 
+      lei: '§ 5º ...sem a correspondente fonte de custeio total.' 
+    },
+    { 
+      pergunta: '§ 6º As contribuições só poderão ser exigidas após decorridos _______ dias da publicação da lei.', 
+      resposta: 'noventa', 
+      explicacao: 'Princípio da Noventena.', 
+      lei: '§ 6º ...após decorridos noventa dias...' 
+    },
+    { 
+      pergunta: '§ 7º São _______ de contribuição as entidades beneficentes de assistência social.', 
+      resposta: 'isentas', 
+      explicacao: 'Imunidade/isenção para filantrópicas que cumprem a lei.', 
+      lei: '§ 7º São isentas de contribuição...' 
+    },
+    { 
+      pergunta: 'A saúde é direito de todos e dever do _______.', 
+      resposta: 'Estado', 
+      explicacao: 'Responsabilidade máxima do Governo.', 
+      lei: 'Art. 196. A saúde é direito de todos e dever do Estado...' 
+    },
+    { 
+      pergunta: 'As ações de saúde visam ao acesso universal e _______.', 
+      resposta: 'igualitário', 
+      explicacao: 'Atendimento sem discriminação.', 
+      lei: 'Art. 196. ...acesso universal e igualitário...' 
+    },
+    { 
+      pergunta: 'São de _______ pública as ações e serviços de saúde.', 
+      resposta: 'relevância', 
+      explicacao: 'Importância vital que exige controle estatal.', 
+      lei: 'Art. 197. São de relevância pública...' 
+    },
+    { 
+      pergunta: 'As ações públicas de saúde integram uma rede regionalizada e _______.', 
+      resposta: 'hierarquizada', 
+      explicacao: 'Divisão por níveis de complexidade médica.', 
+      lei: 'Art. 198. ...rede regionalizada e hierarquizada...' 
+    },
+    { 
+      pergunta: 'I - descentralização, com direção _______ em cada esfera de governo.', 
+      resposta: 'única', 
+      explicacao: 'Cada ente manda no seu próprio sistema.', 
+      lei: 'I - descentralização, com direção única...' 
+    },
+    { 
+      pergunta: 'II - atendimento integral, com prioridade para as atividades _______.', 
+      resposta: 'preventivas', 
+      explicacao: 'Vacinas e exames antes da cura.', 
+      lei: 'II - atendimento integral, com prioridade para as atividades preventivas...' 
+    },
+    { 
+      pergunta: 'III - participação da _______.', 
+      resposta: 'comunidade', 
+      explicacao: 'Controle social pelos cidadãos.', 
+      lei: 'III - participação da comunidade.' 
+    },
+    { 
+      pergunta: 'A assistência à saúde é _______ à iniciativa privada.', 
+      resposta: 'livre', 
+      explicacao: 'Não é monopólio estatal.', 
+      lei: 'Art. 199. A assistência à saúde é livre...' 
+    },
+    { 
+      pergunta: 'Instituições privadas participam do SUS de forma _______.', 
+      resposta: 'complementar', 
+      explicacao: 'Entram para suprir o que o Estado não alcança.', 
+      lei: '§ 1º ...poderão participar de forma complementar...' 
+    },
+    { 
+      pergunta: 'Compete ao SUS participar da política e execução de ações de _______ básico.', 
+      resposta: 'saneamento', 
+      explicacao: 'Saneamento reflete diretamente na saúde.', 
+      lei: 'Art. 200. IV - participar da formulação... de saneamento básico;' 
+    },
+    { 
+      pergunta: 'A previdência social terá caráter contributivo e de filiação _______.', 
+      resposta: 'obrigatória', 
+      explicacao: 'Trabalhou, tem que pagar ao INSS.', 
+      lei: 'Art. 201. ...caráter contributivo e de filiação obrigatória...' 
+    },
+    { 
+      pergunta: 'Deve-se observar critérios que preservem o equilíbrio financeiro e _______.', 
+      resposta: 'atuarial', 
+      explicacao: 'Cálculos de sustentabilidade a longo prazo.', 
+      lei: 'Art. 201. ...equilíbrio financeiro e atuarial...' 
+    },
+    { 
+      pergunta: 'III - proteção ao trabalhador em situação de desemprego _______.', 
+      resposta: 'involuntário', 
+      explicacao: 'Ajuda para quem foi demitido sem justa causa.', 
+      lei: 'III - proteção ao trabalhador em situação de desemprego involuntário;' 
+    },
+    { 
+      pergunta: 'IV - salário-família e auxílio-reclusão para os dependentes dos segurados de _______ renda.', 
+      resposta: 'baixa', 
+      explicacao: 'Benefícios restritos aos mais pobres.', 
+      lei: 'IV - ...dependentes dos segurados de baixa renda;' 
+    },
+    { 
+      pergunta: 'Nenhum benefício substitutivo do salário terá valor inferior ao _______ mínimo.', 
+      resposta: 'salário', 
+      explicacao: 'O piso é o salário mínimo nacional.', 
+      lei: '§ 2º ...terá valor mensal inferior ao salário mínimo.' 
+    },
+    { 
+      pergunta: 'O regime de previdência privada será _______ e baseado em reservas.', 
+      resposta: 'facultativo', 
+      explicacao: 'Livre escolha do cidadão.', 
+      lei: 'Art. 202. O regime de previdência privada... será facultativo...' 
+    },
+    { 
+      pergunta: 'A previdência privada é regulada por lei _______.', 
+      resposta: 'complementar', 
+      explicacao: 'Exige lei mais robusta (LC).', 
+      lei: 'Art. 202. ...e regulado por lei complementar.' 
+    },
+    { 
+      pergunta: 'Contribuições do empregador para previdência privada _______ integram o contrato de trabalho.', 
+      resposta: 'não', 
+      explicacao: 'Desvinculação trabalhista para incentivo ao benefício.', 
+      lei: '§ 2º ...não integram o contrato de trabalho...' 
+    },
+    { 
+      pergunta: 'É vedado o aporte de recursos públicos na previdência privada, salvo na qualidade de _______.', 
+      resposta: 'patrocinador', 
+      explicacao: 'Estado só põe dinheiro no plano de seus servidores.', 
+      lei: '§ 3º ...salvo na qualidade de patrocinador...' 
+    },
+    { 
+      pergunta: 'A contribuição do patrocinador público em hipótese alguma poderá _______ a do segurado.', 
+      resposta: 'exceder', 
+      explicacao: 'Proporção máxima de 1 para 1.', 
+      lei: '§ 3º ...em hipótese alguma... poderá exceder a do segurado.' 
+    },
+    { 
+      pergunta: 'A assistência social será prestada _______ de contribuição à seguridade social.', 
+      resposta: 'independentemente', 
+      explicacao: 'Gratuita para quem dela necessitar.', 
+      lei: 'Art. 203. ...independentemente de contribuição...' 
+    },
+    { 
+      pergunta: 'I - proteção à família, maternidade, infância, adolescência e _______.', 
+      resposta: 'velhice', 
+      explicacao: 'Amparo aos vulneráveis de todas as idades.', 
+      lei: 'I - a proteção à família... e à velhice;' 
+    },
+    { 
+      pergunta: 'II - o amparo às crianças e adolescentes carentes.', 
+      resposta: 'carentes', 
+      explicacao: 'Foco na pobreza infantil.', 
+      lei: 'II - o amparo às crianças e adolescentes carentes;' 
+    },
+    { 
+      pergunta: 'III - a promoção da integração ao mercado de _______.', 
+      resposta: 'trabalho', 
+      explicacao: 'Visa dar autonomia ao cidadão assistido.', 
+      lei: 'III - a promoção da integração ao mercado de trabalho;' 
+    },
+    { 
+      pergunta: 'IV - habilitação e _______ das pessoas portadoras de deficiência.', 
+      resposta: 'reabilitação', 
+      explicacao: 'Objetivo de inclusão na vida comunitária.', 
+      lei: 'IV - a habilitação e reabilitação...' 
+    },
+    { 
+      pergunta: 'V - garantia de um salário mínimo mensal ao idoso ou deficiente sem meios de _______.', 
+      resposta: 'manutenção', 
+      explicacao: 'Garantia do BPC.', 
+      lei: 'V - ... meios de prover à própria manutenção...' 
+    },
+    { 
+      pergunta: 'As ações de assistência seguem a diretriz da descentralização político-_______.', 
+      resposta: 'administrativa', 
+      explicacao: 'Gestão compartilhada entre U, E, M.', 
+      lei: 'Art. 204. I - descentralização político-administrativa...' 
+    },
+    { 
+      pergunta: 'A coordenação e as normas gerais da assistência cabem à esfera _______.', 
+      resposta: 'federal', 
+      explicacao: 'União dita as regras e coordena o sistema.', 
+      lei: 'I - ...cabendo a coordenação e as normas gerais à esfera federal...' 
+    },
+    { 
+      pergunta: 'II - participação da população por meio de organizações _______.', 
+      resposta: 'representativas', 
+      explicacao: 'Conselhos com entidades da sociedade civil.', 
+      lei: 'II - participação da população... representativas...' 
+    },
+    { 
+      pergunta: 'Saúde, Previdência e Assistência Social formam a _______ Social.', 
+      resposta: 'Seguridade', 
+      explicacao: 'O tripé da proteção social brasileira.', 
+      lei: 'Art. 194. A seguridade social compreende...' 
+    }
+  ]
+};
