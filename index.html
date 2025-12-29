@@ -11,71 +11,87 @@
             --dark-bg: #0f172a; --dark-card: #1e293b; --dark-text: #f1f5f9;
         }
         
-        /* Ajustes de Base */
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--dark-bg); color: var(--dark-text); -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--dark-bg); color: var(--dark-text); -webkit-tap-highlight-color: transparent; transition: 0.3s; }
         body.light { background: #f8fafc; color: #1e293b; }
 
         /* Tela de Início Adaptável */
-        #tela-preparacao { padding: 20px; max-width: 450px; margin: 40px auto; border-radius: 20px; background: var(--dark-card); text-align: center; width: 90%; }
+        #tela-preparacao { padding: 20px; max-width: 450px; margin: 40px auto; border-radius: 20px; background: var(--dark-card); text-align: center; width: 90%; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); }
+        body.light #tela-preparacao { background: white; border: 1px solid #e2e8f0; }
         
-        /* Barra de Progresso e Streak */
-        .streak-box { font-size: 1.1rem; color: #fb923c; margin-bottom: 15px; }
+        .streak-box { font-size: 1.1rem; color: #fb923c; margin-bottom: 15px; font-weight: bold; }
         .progresso-visual { height: 10px; background: #334155; border-radius: 10px; margin: 10px 0; overflow: hidden; }
         .barra-fill { height: 100%; background: var(--primary); width: 0%; transition: 1s; }
 
-        /* Header fixo e compacto para Mobile */
+        /* Inputs Padronizados */
+        select, input[type="number"] { 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-top: 8px; 
+            background: #2d3748; 
+            color: white; 
+            border: 1px solid #4a5568; 
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.2s;
+        }
+        body.light select, body.light input[type="number"] { background: #f1f5f9; color: #1e293b; border-color: #cbd5e1; }
+        input[type="number"]:focus { border-color: var(--primary); }
+
+        /* Header fixo */
         .header-guerra { position: fixed; top: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); display: none; padding: 10px 0; }
         .stats-grid-topo { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; font-size: 0.75rem; font-weight: 700; max-width: 800px; margin: auto; }
 
-        /* Mapa de Questões: Lateral no PC, Topo no Celular */
+        /* Mapa de Questões */
         .nav-questoes { position: fixed; left: 10px; top: 80px; width: 45px; display: none; flex-direction: column; gap: 5px; max-height: 70vh; overflow-y: auto; z-index: 900; }
-        
         @media (max-width: 800px) {
             .nav-questoes { left: 0; top: 50px; width: 100%; height: 50px; flex-direction: row; padding: 5px; background: #1e293b; border-bottom: 1px solid #334155; }
-            .nav-item { min-width: 35px !important; }
             .container { margin-top: 120px !important; width: 95% !important; padding: 10px !important; }
         }
 
-        .nav-item { width: 35px; height: 35px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.2); background: rgba(148,163,184,0.1); color: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .nav-item { width: 35px; height: 35px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.2); background: rgba(148,163,184,0.1); color: inherit; font-size: 11px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
         .nav-item.respondida { border: 2px solid var(--info); }
         .nav-item.certa { background: var(--primary) !important; color: white; border: none; }
         .nav-item.errada { background: var(--danger) !important; color: white; border: none; }
         .nav-item.branco { background: #94a3b8 !important; color: white; border: none; }
 
-        /* Cards de Questão */
+        /* Cards */
         .container { max-width: 700px; margin: 100px auto 120px; display: none; }
         .pergunta-card { background: var(--dark-card); padding: 20px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(148,163,184,0.1); }
         body.light .pergunta-card { background: white; border: 1px solid #e2e8f0; }
 
-        /* Botões Grandes para o dedo no Celular */
-        .btn-opcao { width: 100%; padding: 20px; margin: 8px 0; border-radius: 12px; border: 2px solid transparent; background: rgba(148,163,184,0.1); color: inherit; text-align: left; font-weight: 600; cursor: pointer; font-size: 1rem; }
+        /* Botões de Opção */
+        .btn-opcao { width: 100%; padding: 18px; margin: 8px 0; border-radius: 12px; border: 2px solid transparent; background: rgba(148,163,184,0.1); color: inherit; text-align: left; font-weight: 600; cursor: pointer; font-size: 1rem; }
         .btn-opcao.marcado-azul { border-color: var(--info); background: rgba(59, 130, 246, 0.2); color: var(--info); }
         .btn-branco { font-size: 0.85rem; color: #94a3b8; border: 1px dashed #475569; text-align: center; }
 
+        /* Feedback e Efeitos */
         .feedback { display: none; margin-top: 15px; padding: 15px; border-radius: 12px; font-size: 0.95rem; border-left: 5px solid; }
-        .flashcard-blur { filter: blur(5px); }
+        .flashcard-blur { filter: blur(5px); cursor: pointer; transition: 0.3s; }
         .revelado { filter: none !important; }
 
-        /* Footer Fixo */
-        .footer-guerra { position: fixed; bottom: 0; width: 100%; background: #0f172a; padding: 15px 0; display: none; z-index: 1000; border-top: 1px solid #334155; }
-        .btn-principal { width: 90%; max-width: 350px; padding: 16px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 700; font-size: 1rem; }
+        /* Footer */
+        .footer-guerra { position: fixed; bottom: 0; width: 100%; background: #0f172a; padding: 15px 0; display: none; z-index: 1000; border-top: 1px solid #334155; text-align: center; }
+        .btn-principal { width: 90%; max-width: 350px; padding: 16px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 700; font-size: 1rem; cursor: pointer; }
 
-        /* Estilos de Input para Mobile */
-        select, input { width: 100%; padding: 12px; border-radius: 8px; margin-top: 8px; background: #2d3748; color: white; border: 1px solid #4a5568; font-size: 1rem; }
+        @keyframes pulse-red { 0% { opacity: 1; } 50% { color: var(--danger); } 100% { opacity: 1; } }
+        .tempo-urgente { animation: pulse-red 1s infinite; font-weight: 900; }
     </style>
 </head>
 <body class="dark">
 
 <div id="punicao-screen" style="position:fixed; inset:0; background:black; color:white; z-index:9999; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px;">
     <h1 style="color:var(--danger)">💀 MISSÃO ABORTADA</h1>
-    <p>Erros fatais atingiram o limite. Refaça o estudo.</p>
+    <p>Limite de erros atingido. Revise a matéria antes de tentar novamente.</p>
     <audio controls style="width:100%; max-width:300px; margin:20px 0;"><source src="Arquitetura_da_Seguridade_Social_Brasileira.m4a"></audio>
-    <button class="btn-principal" onclick="location.reload()">REINICIAR</button>
+    <button class="btn-principal" onclick="location.reload()">REINICIAR PROTOCOLO</button>
 </div>
 
 <div id="tela-preparacao">
     <div class="streak-box" id="streak-display">🔥 Estudo em Dia: 0 dias</div>
     <h1 style="color:var(--primary); margin-bottom:5px;">ELITE INSS 2026</h1>
+    
     <div style="margin:20px 0;">
         <div class="progresso-visual"><div class="barra-fill" id="barra-historico"></div></div>
         <small id="texto-historico">Nota: 0% | Meta: 80%</small>
@@ -83,23 +99,23 @@
     
     <div style="text-align:left; margin-bottom:15px;">
         <label style="font-size:0.8rem; font-weight:700;">🎯 SUA META (%)</label>
-        <input type="number" id="input-meta" value="80" min="1" max="100" onchange="localStorage.setItem('eliteMeta', this.value)">
+        <input type="number" id="input-meta" value="80" min="1" max="100" oninput="atualizarMetaVisual(this.value)">
     </div>
 
     <div style="text-align:left; margin-bottom:15px;">
-        <label style="font-size:0.8rem; font-weight:700;">TEMA</label>
+        <label style="font-size:0.8rem; font-weight:700;">INTERFACE</label>
         <select onchange="document.body.className = this.value">
-            <option value="dark">Operações (Escuro)</option>
-            <option value="light">Estudo (Claro)</option>
+            <option value="dark">Modo Operações (Escuro)</option>
+            <option value="light">Modo Administrativo (Claro)</option>
         </select>
     </div>
 
     <div style="text-align:left; margin-bottom:25px;">
-        <label style="font-size:0.8rem; font-weight:700;">TEMPO</label>
+        <label style="font-size:0.8rem; font-weight:700;">TEMPO DE MISSÃO</label>
         <select id="config-tempo">
             <option value="60">60 Minutos</option>
             <option value="30">30 Minutos</option>
-            <option value="0">Livre</option>
+            <option value="0">Sem Tempo</option>
         </select>
     </div>
     <button class="btn-principal" onclick="iniciarMissao()">INICIAR OPERAÇÃO</button>
@@ -118,15 +134,15 @@
 
 <div class="container" id="quiz-cont">
     <div id="quiz-box"></div>
-    <div id="resultado-final" style="display:none; text-align:center; background:var(--dark-card); padding:20px; border-radius:15px;">
-        <span id="patente-texto" style="font-weight:800; color:var(--info); text-transform:uppercase;">RECRUTA</span>
-        <h2 id="score-texto" style="margin:10px 0;">Score: 0</h2>
-        <button class="btn-principal" style="background:var(--warning); margin-bottom:10px;" onclick="mostrarCofre('erro')">📂 VER ERROS</button>
+    <div id="resultado-final" style="display:none; text-align:center; background:var(--dark-card); padding:25px; border-radius:20px;">
+        <span id="patente-texto" style="font-weight:800; color:var(--info); letter-spacing:1px;">RECRUTA</span>
+        <h2 id="score-texto" style="margin:15px 0;">Score Líquido: 0</h2>
+        <button class="btn-principal" style="background:var(--warning); margin-bottom:12px;" onclick="mostrarCofre()">📂 COFRE DE ERROS</button>
         <button class="btn-principal" onclick="location.reload()">🔄 NOVA MISSÃO</button>
     </div>
 </div>
 
-<div class="footer-guerra" id="rodape" style="text-align:center;">
+<div class="footer-guerra" id="rodape">
     <button id="btn-entrega" class="btn-principal" onclick="confirmarEntrega()">ENTREGAR MISSÃO</button>
     <button id="btn-voltar" class="btn-principal" style="display:none; background:var(--info);" onclick="voltarRelatorio()">VOLTAR AO RELATÓRIO</button>
 </div>
@@ -134,7 +150,7 @@
 <script src="perguntas.js"></script>
 
 <script>
-    let vidas = 5, acertos = 0, erros = 0, brancos = 0, tempoRestante, intervalo;
+    let vidas = 5, acertos = 0, erros = 0, tempoRestante, intervalo;
     let respostas = {}, chutes = new Set();
 
     window.onload = () => {
@@ -146,8 +162,15 @@
         atualizarStreak();
     };
 
+    function atualizarMetaVisual(val) {
+        if(val > 100) val = 100;
+        localStorage.setItem('eliteMeta', val);
+        const last = localStorage.getItem('eliteScore') || 0;
+        document.getElementById('texto-historico').innerText = `Última: ${last}% | Meta: ${val}%`;
+    }
+
     function iniciarMissao() {
-        if (typeof perguntas === 'undefined') return alert("Erro no perguntas.js!");
+        if (typeof perguntas === 'undefined') return alert("Erro: arquivo perguntas.js não encontrado!");
         perguntas.sort(() => Math.random() - 0.5);
         const t = document.getElementById('config-tempo').value;
         if(t != "0") { tempoRestante = t * 60; intervalo = setInterval(contagem, 1000); }
@@ -165,16 +188,16 @@
             const card = document.createElement('div');
             card.className = 'pergunta-card'; card.id = `card-${i}`;
             card.innerHTML = `
-                <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-weight:700;">
+                <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700; margin-bottom:10px;">
                     <span style="color:var(--primary)">MISSÃO #${i+1}</span>
-                    <span onclick="marcarDuvida(${i}, this)" style="cursor:pointer; color:var(--warning)">❓ DÚVIDA</span>
+                    <span id="duvida-btn-${i}" onclick="marcarDuvida(${i})" style="cursor:pointer; color:var(--warning)">❓ DÚVIDA</span>
                 </div>
-                <p style="font-weight:600; margin:15px 0; line-height:1.4;">${q.pergunta}</p>
+                <p style="font-weight:600; margin-bottom:20px; line-height:1.5;">${q.pergunta}</p>
                 <button class="btn-opcao" id="opt-${i}-C" onclick="selecionar(${i}, 'C')">Certo</button>
                 <button class="btn-opcao" id="opt-${i}-E" onclick="selecionar(${i}, 'E')">Errado</button>
                 <button class="btn-opcao btn-branco" id="opt-${i}-B" onclick="selecionar(${i}, 'B')">⚪ Deixar em Branco</button>
                 <div id="fb-${i}" class="feedback flashcard-blur" onclick="this.classList.add('revelado')"></div>
-                <button class="btn-principal" id="lei-${i}" style="display:none; background:var(--warning); margin-top:10px; font-size:0.8rem;" onclick="alert('⚖️ LEI:\\n\\n' + perguntas[${i}].lei)">⚖️ VER ARTIGO</button>
+                <button class="btn-principal" id="lei-${i}" style="display:none; background:var(--warning); margin-top:15px; font-size:0.85rem;" onclick="alert('⚖️ FUNDAMENTO LEGAL:\\n\\n' + perguntas[${i}].lei)">⚖️ VER ARTIGO</button>
             `;
             box.appendChild(card);
             const nav = document.createElement('button');
@@ -186,13 +209,23 @@
 
     function selecionar(idx, val) {
         respostas[idx] = val;
-        [`C`,`E`,`B`].forEach(o => document.getElementById(`opt-${idx}-${o}`).classList.remove('marcado-azul'));
+        ['C','E','B'].forEach(o => document.getElementById(`opt-${idx}-${o}`).classList.remove('marcado-azul'));
         document.getElementById(`opt-${idx}-${val}`).classList.add('marcado-azul');
         document.getElementById(`nav-${idx}`).className = (val === 'B') ? 'nav-item branco' : 'nav-item respondida';
+        atualizarPainelTopo();
+    }
+
+    function atualizarPainelTopo() {
+        let tempAcertos = 0, tempErros = 0;
+        Object.keys(respostas).forEach(i => {
+            if(respostas[i] === 'B') return;
+            respostas[i] === perguntas[i].resposta ? tempAcertos++ : tempErros++;
+        });
+        document.getElementById('cont-liquido').innerText = tempAcertos - tempErros;
         document.getElementById('cont-progresso').innerText = `${Object.keys(respostas).length}/${perguntas.length}`;
     }
 
-    function confirmarEntrega() { if(confirm("Deseja encerrar e ver os resultados?")) entregaFinal(); }
+    function confirmarEntrega() { if(confirm("Deseja finalizar e ver o relatório?")) entregaFinal(); }
 
     function entregaFinal() {
         clearInterval(intervalo);
@@ -203,9 +236,10 @@
             const n = document.getElementById(`nav-${i}`);
             if(!r || r === 'B') { n.className = "nav-item branco"; return; }
             f.style.display = "block"; document.getElementById(`lei-${i}`).style.display = "block";
-            if(r === q.resposta) { acertos++; f.className = "feedback correto revelado"; f.innerHTML = "✅ <b>CORRETO!</b><br>" + q.explicacao; n.className = "nav-item certa"; }
+            if(r === q.resposta) { acertos++; f.className = "feedback correto revelado"; f.innerHTML = "✅ <b>ACERTOU!</b><br>" + q.explicacao; n.className = "nav-item certa"; }
             else { erros++; vidas--; f.className = "feedback errado"; f.innerHTML = "❌ <b>ERROU!</b><br>" + q.explicacao; n.className = "nav-item errada"; document.getElementById(`card-${i}`).classList.add('erro-detectado'); }
         });
+        document.getElementById('cont-vidas').innerText = vidas;
         if(vidas <= 0) document.getElementById('punicao-screen').style.display = 'flex';
         else exibirRelatorio();
     }
@@ -215,11 +249,19 @@
         document.getElementById('resultado-final').style.display = 'block';
         document.getElementById('btn-entrega').style.display = 'none';
         const liq = acertos - erros;
-        document.getElementById('score-texto').innerText = `Nota Final: ${liq < 0 ? 0 : liq} pts`;
-        localStorage.setItem('eliteScore', ((acertos/perguntas.length)*100).toFixed(1));
+        const total = perguntas.length;
+        const perc = ((acertos/total)*100).toFixed(1);
+        document.getElementById('score-texto').innerText = `Score Líquido: ${liq < 0 ? 0 : liq} pts (${perc}%)`;
+        
+        let p = "Recruta";
+        if(perc > 40) p = "Soldado";
+        if(perc > 70) p = "Sargento Elite";
+        if(perc > 85) p = "Comandante";
+        document.getElementById('patente-texto').innerText = p;
+        localStorage.setItem('eliteScore', perc);
     }
 
-    function mostrarCofre(tipo) {
+    function mostrarCofre() {
         document.getElementById('resultado-final').style.display = 'none';
         document.getElementById('quiz-box').style.display = 'block';
         document.getElementById('btn-voltar').style.display = 'inline-block';
@@ -239,9 +281,16 @@
         if(tempoRestante <= 0) entregaFinal();
     }
 
-    function marcarDuvida(idx, el) { chutes.has(idx) ? (chutes.delete(idx), el.style.opacity="1") : (chutes.add(idx), el.style.opacity="0.5"); }
+    function marcarDuvida(idx) { 
+        const btn = document.getElementById(`duvida-btn-${idx}`);
+        chutes.has(idx) ? (chutes.delete(idx), btn.style.opacity="1") : (chutes.add(idx), btn.style.opacity="0.4"); 
+    }
+    
     function voltarRelatorio() { document.getElementById('quiz-box').style.display = 'none'; document.getElementById('resultado-final').style.display = 'block'; document.getElementById('btn-voltar').style.display = 'none'; }
-    function atualizarStreak() { document.getElementById('streak-display').innerText = "🔥 Missão de Hoje: Pendente"; }
+    
+    function atualizarStreak() {
+        document.getElementById('streak-display').innerText = "🔥 Missão do Dia: Pendente";
+    }
 </script>
 </body>
 </html>
