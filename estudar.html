@@ -2,8 +2,8 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA DE GUERRA - ELITE INSS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ELITE INSS - MOBILE READY</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -11,104 +11,106 @@
             --dark-bg: #0f172a; --dark-card: #1e293b; --dark-text: #f1f5f9;
         }
         
-        body { font-family: 'Inter', sans-serif; margin: 0; transition: 0.3s; background: var(--dark-bg); color: var(--dark-text); padding-bottom: 100px; }
-        body.light { background: var(--light-bg); color: var(--light-text); }
+        /* Ajustes de Base */
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--dark-bg); color: var(--dark-text); -webkit-tap-highlight-color: transparent; }
+        body.light { background: #f8fafc; color: #1e293b; }
 
-        #tela-preparacao { text-align: center; padding: 40px; max-width: 500px; margin: 60px auto; border-radius: 24px; background: var(--dark-card); box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
-        .streak-box { font-size: 1.2rem; margin-bottom: 20px; color: #fb923c; font-weight: bold; }
+        /* Tela de Início Adaptável */
+        #tela-preparacao { padding: 20px; max-width: 450px; margin: 40px auto; border-radius: 20px; background: var(--dark-card); text-align: center; width: 90%; }
         
-        .progresso-visual { height: 12px; background: #334155; border-radius: 10px; margin: 15px 0; overflow: hidden; }
-        .barra-fill { height: 100%; background: var(--primary); width: 0%; transition: 1s ease-out; }
+        /* Barra de Progresso e Streak */
+        .streak-box { font-size: 1.1rem; color: #fb923c; margin-bottom: 15px; }
+        .progresso-visual { height: 10px; background: #334155; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .barra-fill { height: 100%; background: var(--primary); width: 0%; transition: 1s; }
 
-        .header-guerra { position: fixed; top: 0; width: 100%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); padding: 15px 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); display: none; }
-        .nav-questoes { position: fixed; left: 15px; top: 100px; width: 45px; display: none; flex-direction: column; gap: 5px; max-height: 70vh; overflow-y: auto; }
-        .nav-item { height: 35px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.2); background: rgba(148,163,184,0.1); color: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+        /* Header fixo e compacto para Mobile */
+        .header-guerra { position: fixed; top: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); display: none; padding: 10px 0; }
+        .stats-grid-topo { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; font-size: 0.75rem; font-weight: 700; max-width: 800px; margin: auto; }
+
+        /* Mapa de Questões: Lateral no PC, Topo no Celular */
+        .nav-questoes { position: fixed; left: 10px; top: 80px; width: 45px; display: none; flex-direction: column; gap: 5px; max-height: 70vh; overflow-y: auto; z-index: 900; }
+        
+        @media (max-width: 800px) {
+            .nav-questoes { left: 0; top: 50px; width: 100%; height: 50px; flex-direction: row; padding: 5px; background: #1e293b; border-bottom: 1px solid #334155; }
+            .nav-item { min-width: 35px !important; }
+            .container { margin-top: 120px !important; width: 95% !important; padding: 10px !important; }
+        }
+
+        .nav-item { width: 35px; height: 35px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.2); background: rgba(148,163,184,0.1); color: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
         .nav-item.respondida { border: 2px solid var(--info); }
-        .nav-item.certa { background: var(--primary) !important; color: white; }
-        .nav-item.errada { background: var(--danger) !important; color: white; }
-        .nav-item.branco { background: #94a3b8 !important; color: white; }
+        .nav-item.certa { background: var(--primary) !important; color: white; border: none; }
+        .nav-item.errada { background: var(--danger) !important; color: white; border: none; }
+        .nav-item.branco { background: #94a3b8 !important; color: white; border: none; }
 
-        .container { max-width: 700px; margin: 120px auto 40px; padding: 20px; display: none; }
-        .pergunta-card { background: var(--dark-card); padding: 30px; border-radius: 20px; margin-bottom: 25px; border: 1px solid rgba(148,163,184,0.1); }
-        
-        .pegadinha-alert { background: #fef08a; color: #854d0e; padding: 0 4px; border-radius: 2px; font-weight: bold; }
-        .erro-fatal-card { border: 2px solid var(--danger) !important; box-shadow: 0 0 20px rgba(239, 68, 68, 0.3) !important; }
-        .tag-fatal { background: var(--danger); color: white; font-size: 0.6rem; padding: 2px 8px; border-radius: 4px; font-weight: 800; margin-left: 10px; vertical-align: middle; }
+        /* Cards de Questão */
+        .container { max-width: 700px; margin: 100px auto 120px; display: none; }
+        .pergunta-card { background: var(--dark-card); padding: 20px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(148,163,184,0.1); }
+        body.light .pergunta-card { background: white; border: 1px solid #e2e8f0; }
 
-        .btn-opcao { width: 100%; padding: 18px; margin: 8px 0; border-radius: 12px; border: 2px solid transparent; background: rgba(148,163,184,0.1); color: inherit; text-align: left; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        /* Botões Grandes para o dedo no Celular */
+        .btn-opcao { width: 100%; padding: 20px; margin: 8px 0; border-radius: 12px; border: 2px solid transparent; background: rgba(148,163,184,0.1); color: inherit; text-align: left; font-weight: 600; cursor: pointer; font-size: 1rem; }
         .btn-opcao.marcado-azul { border-color: var(--info); background: rgba(59, 130, 246, 0.2); color: var(--info); }
-        .btn-branco { background: rgba(148,163,184,0.05); color: #94a3b8; font-size: 0.8rem; text-align: center; }
+        .btn-branco { font-size: 0.85rem; color: #94a3b8; border: 1px dashed #475569; text-align: center; }
 
-        .sos-container { display: none; gap: 10px; margin-top: 15px; }
-        .btn-lei { padding: 10px 16px; border-radius: 8px; border: none; font-size: 0.75rem; font-weight: 700; cursor: pointer; background: var(--warning); color: white; }
-        .btn-duvida-card { background: transparent; border: 1px solid var(--warning); color: var(--warning); margin-bottom: 10px; }
-        .btn-duvida-card.marcado { background: var(--warning); color: white; }
-
-        .feedback { display: none; margin-top: 20px; padding: 20px; border-radius: 12px; border-left: 5px solid; line-height: 1.6; }
-        .flashcard-blur { filter: blur(5px); transition: 0.3s; cursor: pointer; }
+        .feedback { display: none; margin-top: 15px; padding: 15px; border-radius: 12px; font-size: 0.95rem; border-left: 5px solid; }
+        .flashcard-blur { filter: blur(5px); }
         .revelado { filter: none !important; }
 
-        #resultado-final { display: none; text-align: center; background: var(--dark-card); padding: 30px; border-radius: 20px; }
-        .patente-badge { font-size: 1.2rem; font-weight: 800; color: var(--info); margin-bottom: 10px; display: block; text-transform: uppercase; }
+        /* Footer Fixo */
+        .footer-guerra { position: fixed; bottom: 0; width: 100%; background: #0f172a; padding: 15px 0; display: none; z-index: 1000; border-top: 1px solid #334155; }
+        .btn-principal { width: 90%; max-width: 350px; padding: 16px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 700; font-size: 1rem; }
 
-        .btn-principal { width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 700; cursor: pointer; margin-top: 15px; }
-        .footer-guerra { position: fixed; bottom: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); padding: 20px 0; display: none; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; z-index: 1000; }
-        
-        #punicao-screen { position: fixed; inset: 0; background: #000; color: white; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; }
-        select, input[type="number"] { width: 100%; padding: 10px; border-radius: 8px; margin-top: 5px; background: #2d3748; color: white; border: 1px solid #4a5568; }
-        
-        @keyframes pulse-red { 0% { color: white; } 50% { color: var(--danger); transform: scale(1.1); } 100% { color: white; } }
-        .tempo-urgente { animation: pulse-red 1s infinite; font-weight: 900 !important; }
+        /* Estilos de Input para Mobile */
+        select, input { width: 100%; padding: 12px; border-radius: 8px; margin-top: 8px; background: #2d3748; color: white; border: 1px solid #4a5568; font-size: 1rem; }
     </style>
 </head>
 <body class="dark">
 
-<div id="punicao-screen">
-    <h1 style="color:var(--danger); font-size: 3rem;">💀 MISSÃO ABORTADA</h1>
-    <p>Muitos erros fatais. Treinamento suspenso. Ouça o áudio completo.</p>
-    <audio controls style="margin: 30px 0;"><source src="Arquitetura_da_Seguridade_Social_Brasileira.m4a"></audio>
-    <button class="btn-principal" onclick="location.reload()" style="max-width: 250px;">REINICIAR PROTOCOLO</button>
+<div id="punicao-screen" style="position:fixed; inset:0; background:black; color:white; z-index:9999; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px;">
+    <h1 style="color:var(--danger)">💀 MISSÃO ABORTADA</h1>
+    <p>Erros fatais atingiram o limite. Refaça o estudo.</p>
+    <audio controls style="width:100%; max-width:300px; margin:20px 0;"><source src="Arquitetura_da_Seguridade_Social_Brasileira.m4a"></audio>
+    <button class="btn-principal" onclick="location.reload()">REINICIAR</button>
 </div>
 
 <div id="tela-preparacao">
     <div class="streak-box" id="streak-display">🔥 Estudo em Dia: 0 dias</div>
-    <h1 style="margin:0; color:var(--primary);">ELITE INSS 2026</h1>
-    
-    <div style="margin: 25px 0;">
+    <h1 style="color:var(--primary); margin-bottom:5px;">ELITE INSS 2026</h1>
+    <div style="margin:20px 0;">
         <div class="progresso-visual"><div class="barra-fill" id="barra-historico"></div></div>
-        <small id="texto-historico">Última nota: 0% | Meta: 80%</small>
+        <small id="texto-historico">Nota: 0% | Meta: 80%</small>
+    </div>
+    
+    <div style="text-align:left; margin-bottom:15px;">
+        <label style="font-size:0.8rem; font-weight:700;">🎯 SUA META (%)</label>
+        <input type="number" id="input-meta" value="80" min="1" max="100" onchange="localStorage.setItem('eliteMeta', this.value)">
     </div>
 
-    <div style="text-align: left; margin-bottom: 20px;">
-        <label style="font-size: 0.7rem; font-weight: 700; color:var(--primary);">🎯 DEFINIR META DE ACERTOS (%)</label>
-        <input type="number" id="input-meta" value="80" min="1" max="100" onchange="salvarMeta(this.value)">
-    </div>
-
-    <div style="text-align: left; margin-bottom: 20px;">
-        <label style="font-size: 0.7rem; font-weight: 700;">INTERFACE</label>
-        <select id="config-tema" onchange="document.body.className = this.value">
-            <option value="dark">Modo Operações (Escuro)</option>
-            <option value="light">Modo Administrativo (Claro)</option>
+    <div style="text-align:left; margin-bottom:15px;">
+        <label style="font-size:0.8rem; font-weight:700;">TEMA</label>
+        <select onchange="document.body.className = this.value">
+            <option value="dark">Operações (Escuro)</option>
+            <option value="light">Estudo (Claro)</option>
         </select>
     </div>
 
-    <div style="text-align: left; margin-bottom: 30px;">
-        <label style="font-size: 0.7rem; font-weight: 700;">TEMPO DE MISSÃO</label>
+    <div style="text-align:left; margin-bottom:25px;">
+        <label style="font-size:0.8rem; font-weight:700;">TEMPO</label>
         <select id="config-tempo">
             <option value="60">60 Minutos</option>
             <option value="30">30 Minutos</option>
-            <option value="0">Sem Tempo</option>
+            <option value="0">Livre</option>
         </select>
     </div>
     <button class="btn-principal" onclick="iniciarMissao()">INICIAR OPERAÇÃO</button>
 </div>
 
 <div class="header-guerra" id="topo">
-    <div style="display: flex; justify-content: space-around; max-width: 900px; margin: auto; font-weight: 700;">
-        <span id="display-tempo-box">⏱️ <span id="tempo">--:--</span></span>
-        <span>🎯 LÍQUIDO: <span id="cont-liquido">0</span></span>
-        <span>❤️ VIDAS: <span id="cont-vidas">5</span></span>
-        <span>📊 <span id="cont-progresso">0/0</span></span>
+    <div class="stats-grid-topo">
+        <div>⏱️<br><span id="tempo">--:--</span></div>
+        <div>🎯<br><span id="cont-liquido">0</span></div>
+        <div>❤️<br><span id="cont-vidas">5</span></div>
+        <div>📊<br><span id="cont-progresso">0/0</span></div>
     </div>
 </div>
 
@@ -116,71 +118,39 @@
 
 <div class="container" id="quiz-cont">
     <div id="quiz-box"></div>
-    <div id="resultado-final">
-        <span class="patente-badge" id="patente-texto">Recruta</span>
-        <h2>🎖️ Relatório Final</h2>
-        <h1 id="score-texto" style="color:var(--primary)">Score Líquido: 0</h1>
-        <p id="tempo-medio" style="font-size: 0.8rem; opacity: 0.7;"></p>
-        <div class="stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; text-align: left; font-size: 0.85rem;">
-            <div class="stat-item" style="border-left: 4px solid var(--primary); padding: 10px; background: rgba(255,255,255,0.05);">✅ Acertos: <span id="stat-consciente">0</span></div>
-            <div class="stat-item" style="border-left: 4px solid var(--danger); padding: 10px; background: rgba(255,255,255,0.05);">❌ Erros: <span id="stat-erros">0</span></div>
-            <div class="stat-item" style="border-left: 4px solid #94a3b8; padding: 10px; background: rgba(255,255,255,0.05);">⚪ Em Branco: <span id="stat-branco">0</span></div>
-            <div class="stat-item" style="border-left: 4px solid var(--warning); padding: 10px; background: rgba(255,255,255,0.05);">💀 Fatais: <span id="stat-erro-fatal">0</span></div>
-        </div>
-        <button class="btn-principal" style="background:var(--warning);" onclick="mostrarCofre('erro')">📂 REVISAR ERROS (RADAR ON)</button>
+    <div id="resultado-final" style="display:none; text-align:center; background:var(--dark-card); padding:20px; border-radius:15px;">
+        <span id="patente-texto" style="font-weight:800; color:var(--info); text-transform:uppercase;">RECRUTA</span>
+        <h2 id="score-texto" style="margin:10px 0;">Score: 0</h2>
+        <button class="btn-principal" style="background:var(--warning); margin-bottom:10px;" onclick="mostrarCofre('erro')">📂 VER ERROS</button>
         <button class="btn-principal" onclick="location.reload()">🔄 NOVA MISSÃO</button>
     </div>
 </div>
 
-<div class="footer-guerra" id="rodape">
-    <button id="btn-entrega" class="btn-principal" style="max-width:300px;" onclick="confirmarEntrega()">ENTREGAR MISSÃO</button>
-    <button id="btn-voltar-relatorio" class="btn-principal" style="max-width:300px; display:none; background:var(--info);" onclick="voltarRelatorio()">VOLTAR AO RELATÓRIO</button>
+<div class="footer-guerra" id="rodape" style="text-align:center;">
+    <button id="btn-entrega" class="btn-principal" onclick="confirmarEntrega()">ENTREGAR MISSÃO</button>
+    <button id="btn-voltar" class="btn-principal" style="display:none; background:var(--info);" onclick="voltarRelatorio()">VOLTAR AO RELATÓRIO</button>
 </div>
 
 <script src="perguntas.js"></script>
 
 <script>
-    let vidas = 5, acertos = 0, erros = 0, brancos = 0, tempoRestante, intervalo, tempoInicial;
-    let chutes = new Set(), respostas = {};
-    const pegadinhas = ["exclusivamente", "apenas", "sempre", "nunca", "obrigatoriamente", "somente"];
+    let vidas = 5, acertos = 0, erros = 0, brancos = 0, tempoRestante, intervalo;
+    let respostas = {}, chutes = new Set();
 
     window.onload = () => {
         const last = localStorage.getItem('eliteScore') || 0;
         const meta = localStorage.getItem('eliteMeta') || 80;
         document.getElementById('input-meta').value = meta;
         document.getElementById('barra-historico').style.width = last + "%";
-        document.getElementById('texto-historico').innerText = `Sua última nota: ${last}% | Meta: ${meta}%`;
+        document.getElementById('texto-historico').innerText = `Última: ${last}% | Meta: ${meta}%`;
         atualizarStreak();
     };
-
-    function salvarMeta(val) {
-        localStorage.setItem('eliteMeta', val);
-        const last = localStorage.getItem('eliteScore') || 0;
-        document.getElementById('texto-historico').innerText = `Sua última nota: ${last}% | Meta: ${val}%`;
-    }
-
-    function atualizarStreak() {
-        const hoje = new Date().toDateString();
-        const ultimaData = localStorage.getItem('ultimaMissaoData');
-        let streak = parseInt(localStorage.getItem('estudoStreak') || 0);
-
-        if (ultimaData) {
-            const ontem = new Date(); ontem.setDate(ontem.getDate() - 1);
-            if (ultimaData === hoje) {} 
-            else if (ultimaData === ontem.toDateString()) { streak++; }
-            else { streak = 0; }
-        }
-        document.getElementById('streak-display').innerText = `🔥 Estudo em Dia: ${streak} dias`;
-        localStorage.setItem('estudoStreak', streak);
-    }
 
     function iniciarMissao() {
         if (typeof perguntas === 'undefined') return alert("Erro no perguntas.js!");
         perguntas.sort(() => Math.random() - 0.5);
-        const tempoEscolha = document.getElementById('config-tempo').value;
-        tempoInicial = tempoEscolha != "0" ? tempoEscolha * 60 : 0;
-        tempoRestante = tempoInicial;
-        if(tempoEscolha != "0") intervalo = setInterval(contagem, 1000);
+        const t = document.getElementById('config-tempo').value;
+        if(t != "0") { tempoRestante = t * 60; intervalo = setInterval(contagem, 1000); }
         document.getElementById('tela-preparacao').style.display = 'none';
         document.getElementById('topo').style.display = 'block';
         document.getElementById('mapa').style.display = 'flex';
@@ -195,121 +165,68 @@
             const card = document.createElement('div');
             card.className = 'pergunta-card'; card.id = `card-${i}`;
             card.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div class="primary-tag" style="font-size:0.7rem; color:var(--primary); font-weight:700;">MISSÃO #${i+1}</div>
-                    <button class="btn-sos btn-duvida-card" id="duvida-${i}" onclick="marcarDuvida(${i})">❓ DÚVIDA</button>
+                <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-weight:700;">
+                    <span style="color:var(--primary)">MISSÃO #${i+1}</span>
+                    <span onclick="marcarDuvida(${i}, this)" style="cursor:pointer; color:var(--warning)">❓ DÚVIDA</span>
                 </div>
-                <p style="font-size:1.1rem; font-weight:600; margin: 15px 0;">${q.pergunta}</p>
+                <p style="font-weight:600; margin:15px 0; line-height:1.4;">${q.pergunta}</p>
                 <button class="btn-opcao" id="opt-${i}-C" onclick="selecionar(${i}, 'C')">Certo</button>
                 <button class="btn-opcao" id="opt-${i}-E" onclick="selecionar(${i}, 'E')">Errado</button>
                 <button class="btn-opcao btn-branco" id="opt-${i}-B" onclick="selecionar(${i}, 'B')">⚪ Deixar em Branco</button>
-                <div class="sos-container" id="sos-${i}"><button class="btn-lei" onclick="alert('⚖️ LEI:\\n\\n' + perguntas[${i}].lei)">⚖️ VER ARTIGO</button></div>
                 <div id="fb-${i}" class="feedback flashcard-blur" onclick="this.classList.add('revelado')"></div>
+                <button class="btn-principal" id="lei-${i}" style="display:none; background:var(--warning); margin-top:10px; font-size:0.8rem;" onclick="alert('⚖️ LEI:\\n\\n' + perguntas[${i}].lei)">⚖️ VER ARTIGO</button>
             `;
             box.appendChild(card);
             const nav = document.createElement('button');
             nav.className = 'nav-item'; nav.id = `nav-${i}`; nav.innerText = i + 1;
-            nav.onclick = () => window.scrollTo({top: document.getElementById(`card-${i}`).offsetTop - 130, behavior:'smooth'});
+            nav.onclick = () => window.scrollTo({top: document.getElementById(`card-${i}`).offsetTop - 110, behavior:'smooth'});
             document.getElementById('mapa').appendChild(nav);
         });
     }
 
     function selecionar(idx, val) {
         respostas[idx] = val;
-        document.getElementById(`opt-${idx}-C`).classList.remove('marcado-azul');
-        document.getElementById(`opt-${idx}-E`).classList.remove('marcado-azul');
-        document.getElementById(`opt-${idx}-B`).classList.remove('marcado-azul');
+        [`C`,`E`,`B`].forEach(o => document.getElementById(`opt-${idx}-${o}`).classList.remove('marcado-azul'));
         document.getElementById(`opt-${idx}-${val}`).classList.add('marcado-azul');
-        document.getElementById(`nav-${idx}`).className = val === 'B' ? 'nav-item branco' : 'nav-item respondida';
-        atualizarPainelTopo();
-    }
-
-    function atualizarPainelTopo() {
-        let tempAcertos = 0, tempErros = 0;
-        Object.keys(respostas).forEach(i => {
-            if(respostas[i] === 'B') return;
-            respostas[i] === perguntas[i].resposta ? tempAcertos++ : tempErros++;
-        });
-        document.getElementById('cont-liquido').innerText = tempAcertos - tempErros;
+        document.getElementById(`nav-${idx}`).className = (val === 'B') ? 'nav-item branco' : 'nav-item respondida';
         document.getElementById('cont-progresso').innerText = `${Object.keys(respostas).length}/${perguntas.length}`;
     }
 
-    function confirmarEntrega() { if(confirm(`Entregar missão agora?`)) entregaFinal(); }
+    function confirmarEntrega() { if(confirm("Deseja encerrar e ver os resultados?")) entregaFinal(); }
 
     function entregaFinal() {
         clearInterval(intervalo);
-        localStorage.setItem('ultimaMissaoData', new Date().toDateString());
-        let s = { consciente: 0, sorte: 0, erroDuvida: 0, erroFatal: 0 };
-        acertos = 0; erros = 0; brancos = 0;
-
+        acertos = 0; erros = 0;
         perguntas.forEach((q, i) => {
-            const resp = respostas[i];
+            const r = respostas[i];
             const f = document.getElementById(`fb-${i}`);
             const n = document.getElementById(`nav-${i}`);
-            const card = document.getElementById(`card-${i}`);
-            
-            if(!resp || resp === 'B') { brancos++; f.style.display="none"; n.className="nav-item branco"; return; }
-            
-            f.style.display = "block";
-            document.getElementById(`sos-${i}`).style.display = "flex";
-
-            if(resp === q.resposta) {
-                acertos++; chutes.has(i) ? s.sorte++ : s.consciente++;
-                f.className = "feedback correto revelado"; f.innerHTML = `✅ <b>ACERTOU!</b><br>${q.explicacao}`;
-                n.className = "nav-item certa";
-            } else {
-                erros++; vidas--;
-                if(chutes.has(i)) s.erroDuvida++; else {
-                    s.erroFatal++; card.classList.add('erro-fatal-card');
-                    card.querySelector('.primary-tag').innerHTML += `<span class="tag-fatal">💀 ERRO FATAL</span>`;
-                }
-                f.className = "feedback errado"; f.innerHTML = `❌ <b>ERROU!</b><br>${q.explicacao}`;
-                n.className = "nav-item errada"; card.classList.add('erro-detectado');
-            }
+            if(!r || r === 'B') { n.className = "nav-item branco"; return; }
+            f.style.display = "block"; document.getElementById(`lei-${i}`).style.display = "block";
+            if(r === q.resposta) { acertos++; f.className = "feedback correto revelado"; f.innerHTML = "✅ <b>CORRETO!</b><br>" + q.explicacao; n.className = "nav-item certa"; }
+            else { erros++; vidas--; f.className = "feedback errado"; f.innerHTML = "❌ <b>ERROU!</b><br>" + q.explicacao; n.className = "nav-item errada"; document.getElementById(`card-${i}`).classList.add('erro-detectado'); }
         });
-
-        if(vidas <= 0) { document.getElementById('punicao-screen').style.display = 'flex'; } 
-        else { exibirRelatorio(s); }
+        if(vidas <= 0) document.getElementById('punicao-screen').style.display = 'flex';
+        else exibirRelatorio();
     }
 
-    function exibirRelatorio(s) {
+    function exibirRelatorio() {
         document.getElementById('quiz-box').style.display = 'none';
         document.getElementById('resultado-final').style.display = 'block';
         document.getElementById('btn-entrega').style.display = 'none';
         const liq = acertos - erros;
-        const total = perguntas.length;
-        const percLíquido = ((liq / total) * 100).toFixed(1);
-        
-        document.getElementById('score-texto').innerText = `Nota Final: ${liq < 0 ? 0 : liq} pts (${percLíquido}%)`;
-        document.getElementById('stat-consciente').innerText = acertos;
-        document.getElementById('stat-erros').innerText = erros;
-        document.getElementById('stat-branco').innerText = brancos;
-        document.getElementById('stat-erro-fatal').innerText = s.erroFatal;
-        
-        let patente = "Recruta";
-        if(percLíquido > 40) patente = "Soldado";
-        if(percLíquido > 70) patente = "Sargento Elite";
-        if(percLíquido > 85) patente = "Comandante Operacional";
-        document.getElementById('patente-texto').innerText = patente;
-
-        localStorage.setItem('eliteScore', percLíquido);
+        document.getElementById('score-texto').innerText = `Nota Final: ${liq < 0 ? 0 : liq} pts`;
+        localStorage.setItem('eliteScore', ((acertos/perguntas.length)*100).toFixed(1));
     }
 
     function mostrarCofre(tipo) {
         document.getElementById('resultado-final').style.display = 'none';
         document.getElementById('quiz-box').style.display = 'block';
-        document.getElementById('btn-voltar-relatorio').style.display = 'inline-block';
+        document.getElementById('btn-voltar').style.display = 'inline-block';
         perguntas.forEach((q, i) => {
             const card = document.getElementById(`card-${i}`);
-            const feedback = document.getElementById(`fb-${i}`);
-            feedback.classList.remove('revelado');
-            
-            let txt = q.pergunta.toLowerCase();
-            pegadinhas.forEach(p => {
-                if(txt.includes(p)) card.querySelector('p').innerHTML = q.pergunta.replace(new RegExp(p, 'gi'), match => `<span class="pegadinha-alert">${match}</span>`);
-            });
-
-            card.style.display = (tipo === 'erro' ? card.classList.contains('erro-detectado') : chutes.has(i)) ? "block" : "none";
+            card.style.display = card.classList.contains('erro-detectado') ? "block" : "none";
+            document.getElementById(`fb-${i}`).classList.remove('revelado');
         });
         window.scrollTo(0,0);
     }
@@ -317,22 +234,14 @@
     function contagem() {
         tempoRestante--;
         let m = Math.floor(tempoRestante/60).toString().padStart(2,'0'), s = (tempoRestante%60).toString().padStart(2,'0');
-        const display = document.getElementById('tempo');
-        display.innerText = `${m}:${s}`;
-        if(tempoRestante < 300) display.parentElement.className = 'tempo-urgente';
+        document.getElementById('tempo').innerText = `${m}:${s}`;
+        if(tempoRestante < 300) document.getElementById('tempo').classList.add('tempo-urgente');
         if(tempoRestante <= 0) entregaFinal();
     }
 
-    function voltarRelatorio() {
-        document.getElementById('quiz-box').style.display = 'none';
-        document.getElementById('resultado-final').style.display = 'block';
-        document.getElementById('btn-voltar-relatorio').style.display = 'none';
-    }
-
-    function marcarDuvida(idx) {
-        const btn = document.getElementById(`duvida-${idx}`);
-        chutes.has(idx) ? (chutes.delete(idx), btn.classList.remove('marcado')) : (chutes.add(idx), btn.classList.add('marcado'));
-    }
+    function marcarDuvida(idx, el) { chutes.has(idx) ? (chutes.delete(idx), el.style.opacity="1") : (chutes.add(idx), el.style.opacity="0.5"); }
+    function voltarRelatorio() { document.getElementById('quiz-box').style.display = 'none'; document.getElementById('resultado-final').style.display = 'block'; document.getElementById('btn-voltar').style.display = 'none'; }
+    function atualizarStreak() { document.getElementById('streak-display').innerText = "🔥 Missão de Hoje: Pendente"; }
 </script>
 </body>
 </html>
